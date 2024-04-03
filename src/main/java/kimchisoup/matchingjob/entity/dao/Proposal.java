@@ -42,9 +42,8 @@ public class Proposal extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
-
-    @ManyToMany(mappedBy = "offers")
-    private List<JobSeekerUser> users = new ArrayList<>();
+    @OneToMany(mappedBy = "proposal")
+    private List<JobSeekerUserProposal> users = new ArrayList<>();
 
     @Builder
     public Proposal(InterestFieldType interestFieldType, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {

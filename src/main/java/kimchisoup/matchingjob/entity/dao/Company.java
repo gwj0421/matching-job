@@ -46,4 +46,12 @@ public class Company extends BaseTime {
     public void changePeopleCnt(int peopleCnt) {
         this.peopleCnt = peopleCnt;
     }
+
+    public void addProposal(Proposal proposal) {
+        this.proposals.add(proposal);
+    }
+
+    public void addSuccessfulResume(SuccessfulResume successfulResume) {
+        this.successfulResumes.add(successfulResume);
+    }
 }

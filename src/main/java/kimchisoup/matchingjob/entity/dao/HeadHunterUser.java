@@ -26,4 +26,8 @@ public class HeadHunterUser extends SiteUser {
     public HeadHunterUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl) {
         super(name, email, password, phoneNumber, nickName, profileImageUrl);
     }
+
+    public void addProposal(Proposal proposal) {
+        this.proposals.add(proposal);
+    }
 }
