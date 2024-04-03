@@ -2,6 +2,7 @@ package kimchisoup.matchingjob.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import kimchisoup.matchingjob.entity.common.*;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -23,6 +24,7 @@ public class WriteProposalForm {
     private String preference;
     private String welfare;
 
+    @Builder
     public WriteProposalForm(InterestField interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, KoreanRegion workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
         this.interestField = interestField;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;
