@@ -1,9 +1,7 @@
 package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
-import kimchisoup.matchingjob.entity.common.InterestField;
-import kimchisoup.matchingjob.entity.common.KoreanRegion;
-import kimchisoup.matchingjob.utils.converter.EnumConverter;
+import kimchisoup.matchingjob.entity.common.RegionType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,29 +21,33 @@ public class JobSeekerUser extends SiteUser {
     private Long id;
     private String githubToken;
     @Enumerated(EnumType.STRING)
-    private KoreanRegion residence;
-    @Convert(converter = EnumConverter.class)
-    private List<KoreanRegion> preferredRegion;
-    @Convert(converter = EnumConverter.class)
-    private List<InterestField> interestFields;
+    private RegionType residence;
 
-    @ManyToMany
-    @JoinTable(
-            name = "job_offers",
-            joinColumns = @JoinColumn(name = "job_seeker_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "offer_id")
-    )
-    private List<Proposal> offers = new ArrayList<>();
-
+    @OneToMany(mappedBy = "jobSeekerUser")
+    private List<JobSeekerUserRegion> jobSeekerUserRegions = new ArrayList<>();
+    @OneToMany(mappedBy = "jobSeekerUser")
+    private List<JobSeekerUserInterestField> jobSeekerUserInterestFields = new ArrayList<>();
+    @OneToMany(mappedBy = "jobSeekerUser")
+    private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<Resume> resumes = new ArrayList<>();
 
     @Builder
-    public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, String githubToken, KoreanRegion residence, List<KoreanRegion> preferredRegion, List<InterestField> interestFields) {
+    public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, String githubToken, RegionType residence) {
         super(name, email, password, phoneNumber, nickName, profileImageUrl);
         this.githubToken = githubToken;
         this.residence = residence;
-        this.preferredRegion = preferredRegion;
-        this.interestFields = interestFields;
+    }
+
+    public void addRegion(JobSeekerUserRegion region) {
+        this.jobSeekerUserRegions.add(region);
+    }
+
+    public void addInterestField(JobSeekerUserInterestField interestField) {
+        this.jobSeekerUserInterestFields.add(interestField);
+    }
+
+    public void addProposal(JobSeekerUserProposal proposal) {
+        this.jobSeekerUserProposals.add(proposal);
     }
 }
