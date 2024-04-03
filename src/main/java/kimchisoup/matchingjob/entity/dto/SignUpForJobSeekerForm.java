@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Getter
-public class SignUpForJobSeekerForm extends SingUpUserForm {
+public class SignUpForJobSeekerForm extends SignUpUserForm {
     private String githubToken;
     private RegionType residence;
     private List<RegionType> preferredRegion;

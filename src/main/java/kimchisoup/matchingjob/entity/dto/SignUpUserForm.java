@@ -8,7 +8,7 @@ import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-public class SingUpUserForm {
+public class SignUpUserForm {
     @NotBlank
     @Min(2)
     @Max(10)
@@ -31,7 +31,7 @@ public class SingUpUserForm {
     private String nickName;
     private MultipartFile profileImage;
 
-    public SingUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName, MultipartFile profileImage) {
+    public SignUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName, MultipartFile profileImage) {
         this.name = name;
         this.email = email;
         this.password1 = password1;
