@@ -2,11 +2,15 @@ package kimchisoup.matchingjob.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import kimchisoup.matchingjob.entity.common.*;
+import kimchisoup.matchingjob.entity.dao.Company;
+import kimchisoup.matchingjob.entity.dao.InterestField;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class WriteProposalForm {
+    @NotBlank
+    private Company company;
     @NotBlank
     private InterestField interestField;
     @NotBlank
@@ -17,7 +21,7 @@ public class WriteProposalForm {
     @NotBlank
     private String workType;
     @NotBlank
-    private KoreanRegion workRegion;
+    private RegionType workRegion;
     @NotBlank
     private String introduction;
     private String requirement;
@@ -25,7 +29,8 @@ public class WriteProposalForm {
     private String welfare;
 
     @Builder
-    public WriteProposalForm(InterestField interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, KoreanRegion workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
+    public WriteProposalForm(Company company, InterestField interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
+        this.company = company;
         this.interestField = interestField;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;
         this.pay = pay;
