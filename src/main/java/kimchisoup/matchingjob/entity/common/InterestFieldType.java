@@ -1,6 +1,6 @@
 package kimchisoup.matchingjob.entity.common;
 
-public enum InterestField {
+public enum InterestFieldType {
     PLANNING_STRATEGY("기획, 전략"),
     LEGAL_ADMINISTRATIVE("법무, 사무, 총무"),
     HUMAN_RESOURCES("인사, HR"),
@@ -21,11 +21,12 @@ public enum InterestField {
     CONSTRUCTION_FACILITIES("건축, 시설"),
     MEDICAL_BIO("의료, 바이오"),
     MEDIA_CULTURE_SPORTS("미디어, 문화, 스포츠"),
-    PUBLIC_WELFARE("공공, 복지");
+    PUBLIC_WELFARE("공공, 복지"),
+    NONE("None interest field type");
 
     private final String displayName;
 
-    InterestField(String displayName) {
+    InterestFieldType(String displayName) {
         this.displayName = displayName;
     }
 

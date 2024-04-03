@@ -19,7 +19,7 @@ public class Proposal extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private InterestField interestField;
+    private InterestFieldType interestFieldType;
     @Enumerated(EnumType.STRING)
     private CareerExperience requiredMinimumCareerExperience;
     private String pay;
@@ -27,7 +27,7 @@ public class Proposal extends BaseTime {
     private EducationField requiredMinimumEducationLevel;
     private String workType;
     @Enumerated(EnumType.STRING)
-    private KoreanRegion workRegion;
+    private RegionType workRegion;
     private String introduction;
     private String requirement;
     private String preference;
@@ -39,7 +39,6 @@ public class Proposal extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "head_hunter_id")
     private HeadHunterUser headHunterUser;
-
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
@@ -48,8 +47,8 @@ public class Proposal extends BaseTime {
     private List<JobSeekerUser> users = new ArrayList<>();
 
     @Builder
-    public Proposal(InterestField interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, KoreanRegion workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
-        this.interestField = interestField;
+    public Proposal(InterestFieldType interestFieldType, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
+        this.interestFieldType = interestFieldType;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;
         this.pay = pay;
         this.requiredMinimumEducationLevel = requiredMinimumEducationLevel;

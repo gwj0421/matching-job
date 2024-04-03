@@ -3,7 +3,7 @@ package kimchisoup.matchingjob.entity.common;
 import lombok.Getter;
 
 @Getter
-public enum KoreanRegion {
+public enum RegionType {
     SEOUL("서울"),
     BUSAN("부산"),
     DAEGU("대구"),
@@ -20,11 +20,12 @@ public enum KoreanRegion {
     JEONNAM("전남"),
     GYEONGBUK("경북"),
     GYEONGNAM("경남"),
-    JEJU("제주");
+    JEJU("제주"),
+    NONE("None region type");
 
     private final String desc;
 
-    KoreanRegion(String desc) {
+    RegionType(String desc) {
         this.desc = desc;
     }
 }
