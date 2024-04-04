@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface SuccessfulResumeRepository extends JpaRepository<SuccessfulResume, Long> {
-    Optional<List<SuccessfulResume>> findSuccessfulResumesByCompanyId(String companyId);
+    Optional<List<SuccessfulResume>> findSuccessfulResumesByCompanyId(Long companyId);
 }
