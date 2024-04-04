@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "PRE_INTERVIEW_QUESTION")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,16 +24,15 @@ public class PreInterviewQuestion {
     @JoinColumn(name = "headhunter_id")
     private HeadHunterUser headHunter;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "pre_interview_list_id")
-    private PreInterviewList preInterviewList;
+    private List<PreInterviewAnswer> preInterviewAnswers;
 
     @Builder
-    public PreInterviewQuestion(Long id, String questionText, HeadHunterUser headHunter, PreInterviewList preInterviewList) {
-        this.id = id;
+    public PreInterviewQuestion(String questionText, HeadHunterUser headHunter, List<PreInterviewAnswer> preInterviewAnswers) {
         this.questionText = questionText;
         this.headHunter = headHunter;
-        this.preInterviewList = preInterviewList;
+        this.preInterviewAnswers = preInterviewAnswers;
     }
 
 
