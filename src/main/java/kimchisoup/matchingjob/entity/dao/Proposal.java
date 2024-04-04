@@ -2,6 +2,7 @@ package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
 import kimchisoup.matchingjob.entity.common.*;
+import kimchisoup.matchingjob.entity.common.job.JobCategory;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class Proposal extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private InterestFieldType interestFieldType;
+    private JobCategory jobCategory;
     @Enumerated(EnumType.STRING)
     private CareerExperience requiredMinimumCareerExperience;
     private String pay;
@@ -46,8 +47,8 @@ public class Proposal extends BaseTime {
     private List<JobSeekerUserProposal> users = new ArrayList<>();
 
     @Builder
-    public Proposal(InterestFieldType interestFieldType, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
-        this.interestFieldType = interestFieldType;
+    public Proposal(JobCategory jobCategory, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
+        this.jobCategory = jobCategory;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;
         this.pay = pay;
         this.requiredMinimumEducationLevel = requiredMinimumEducationLevel;

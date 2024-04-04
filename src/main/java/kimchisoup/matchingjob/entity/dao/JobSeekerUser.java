@@ -1,8 +1,8 @@
 package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
-import kimchisoup.matchingjob.entity.common.RegionType;
 import kimchisoup.matchingjob.entity.common.Authority;
+import kimchisoup.matchingjob.entity.common.RegionType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,29 +25,25 @@ public class JobSeekerUser extends SiteUser {
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<JobSeekerUserRegion> jobSeekerUserRegions = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
-    private List<JobSeekerUserInterestField> jobSeekerUserInterestFields = new ArrayList<>();
+    private List<JobSeekerUserJobField> jobSeekerUserJobFields = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<Resume> resumes = new ArrayList<>();
 
     @Builder
-    public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, String githubToken, RegionType residence, List<JobSeekerUserRegion> jobSeekerUserRegions, List<JobSeekerUserInterestField> jobSeekerUserInterestFields, List<JobSeekerUserProposal> jobSeekerUserProposals, List<Resume> resumes) {
-        super(name, email, password, phoneNumber, nickName, profileImageUrl, Authority.JOB_SEEKER);
+    public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, Authority authority, String githubToken, RegionType residence) {
+        super(name, email, password, phoneNumber, nickName, profileImageUrl, authority);
         this.githubToken = githubToken;
         this.residence = residence;
-        this.jobSeekerUserRegions = jobSeekerUserRegions;
-        this.jobSeekerUserInterestFields = jobSeekerUserInterestFields;
-        this.jobSeekerUserProposals = jobSeekerUserProposals;
-        this.resumes = resumes;
     }
 
     public void addRegion(JobSeekerUserRegion region) {
         this.jobSeekerUserRegions.add(region);
     }
 
-    public void addInterestField(JobSeekerUserInterestField interestField) {
-        this.jobSeekerUserInterestFields.add(interestField);
+    public void addJobField(JobSeekerUserJobField jobField) {
+        this.jobSeekerUserJobFields.add(jobField);
     }
 
     public void addProposal(JobSeekerUserProposal proposal) {

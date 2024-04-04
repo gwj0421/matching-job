@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SUCCESSFUL_SUBMITTER")
+@Table(name = "SUCCESSFUL_RESUME")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class SuccessfulResume extends BaseTime {
@@ -30,7 +30,7 @@ public class SuccessfulResume extends BaseTime {
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "resume_id")
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @Builder
