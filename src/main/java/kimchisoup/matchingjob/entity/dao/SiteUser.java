@@ -1,7 +1,7 @@
 package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
-import kimchisoup.matchingjob.entity.common.Authority;
+import kimchisoup.matchingjob.security.entity.Authority;
 import kimchisoup.matchingjob.entity.common.BaseTime;
 import lombok.AccessLevel;
 import lombok.Getter;
