@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JobSeekerUserInterestFieldRepository extends JpaRepository<JobSeekerUserJobField,Long> {
+public interface JobSeekerUserJobFieldRepository extends JpaRepository<JobSeekerUserJobField, Long> {
+
 }

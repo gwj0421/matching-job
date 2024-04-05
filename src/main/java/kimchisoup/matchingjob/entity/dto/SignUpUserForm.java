@@ -5,10 +5,9 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-public class SignUpUserForm {
+public class SingUpUserForm {
     @NotBlank
     @Min(2)
     @Max(10)
@@ -29,15 +28,13 @@ public class SignUpUserForm {
     @Min(1)
     @Max(10)
     private String nickName;
-    private MultipartFile profileImage;
 
-    public SignUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName, MultipartFile profileImage) {
+    public SingUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName) {
         this.name = name;
         this.email = email;
         this.password1 = password1;
         this.password2 = password2;
         this.phoneNumber = phoneNumber;
         this.nickName = nickName;
-        this.profileImage = profileImage;
     }
 }
