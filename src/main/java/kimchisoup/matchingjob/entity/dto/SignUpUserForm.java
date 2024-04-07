@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class SingUpUserForm {
+public class SignUpUserForm {
     @NotBlank
     @Min(2)
     @Max(10)
@@ -29,7 +29,7 @@ public class SingUpUserForm {
     @Max(10)
     private String nickName;
 
-    public SingUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName) {
+    public SignUpUserForm(String name, String email, String password1, String password2, String phoneNumber, String nickName) {
         this.name = name;
         this.email = email;
         this.password1 = password1;
