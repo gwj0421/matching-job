@@ -2,13 +2,11 @@ package kimchisoup.matchingjob.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kimchisoup.matchingjob.repository.SuccessfulResumeRepository;
-import kimchisoup.matchingjob.service.CommonService;
-import kimchisoup.matchingjob.service.CommonServiceImpl;
+import kimchisoup.matchingjob.service.SuccessfulResumeService;
+import kimchisoup.matchingjob.service.SuccessfulResumeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
@@ -20,12 +18,7 @@ public class ServiceConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    CommonService commonService() {
-        return new CommonServiceImpl(successfulResumeRepository);
+    SuccessfulResumeService commonService() {
+        return new SuccessfulResumeServiceImpl(successfulResumeRepository);
     }
 }

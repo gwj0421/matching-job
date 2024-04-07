@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+</head>
+<body>
+메인 페이지
+<div sec:authentication="name"/>
+<div>
+    <a href="/login" sec:authorize="isAnonymous()">로그인</a>
+</div>
+<div>
+    <a href="/logout" sec:authorize="isAuthenticated()">로그아웃</a>
+</div>
+<div>
+    <a href="/signUp" sec:authorize="isAnonymous()">회원가입</a>
+</div>
+<div>
+    <a href="/changePassword" sec:authorize="isAuthenticated()">비밀번호 변경</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        .red-text {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>로그인 화면 </h2>
+<form method="post" action="/login">
+    <div>
+        <input type="text" th:name="username" placeholder="이메일" autofocus=""/>
+    </div>
+    <div>
+        <input type="text" th:name="password" placeholder="비밀번호"/>
+    </div>
+    <div>
+        <input type="checkbox" name="remember-me"/>자동 로그인
+    </div>
+    <div th:switch="${errorCode}">
+        <div th:case="1" class="red-text">
+            <p>아이디 혹은 비밀번호가 맞지 않습니다. 확인해주세요</p>
+        </div>
+        <div th:case="2" class="red-text">
+            <p>내부적인 시스템 문제로 요청 처리할 수 없습니다.</p>
+        </div>
+        <div th:case="3" class="red-text">
+            <p>계정이 존재하지 않습니다.</p>
+        </div>
+        <div th:case="4" class="red-text">
+            <p>인증 요청이 거부되었습니다. 관리자에게 문의 주세요</p>
+        </div>
+        <div th:case="5" class="red-text">
+            <p>알 수 없는 이유로 로그인 실패하였습니다. 관리자에게 문의 주세요</p>
+        </div>
+    </div>
+
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+    <input id="joinBtn" type="submit" class="btn btn-secondary active" value="로그인"/>
+    <a href="/signUp" class="btn btn-info active" role="button">회원가입</a>
+</form>
+</body>
+</html>
