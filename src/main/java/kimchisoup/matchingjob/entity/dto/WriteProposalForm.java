@@ -2,8 +2,9 @@ package kimchisoup.matchingjob.entity.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import kimchisoup.matchingjob.entity.common.*;
+import kimchisoup.matchingjob.entity.common.job.JobCategory;
 import kimchisoup.matchingjob.entity.dao.Company;
-import kimchisoup.matchingjob.entity.dao.InterestField;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +13,7 @@ public class WriteProposalForm {
     @NotBlank
     private Company company;
     @NotBlank
-    private InterestField interestField;
+    private JobCategory interestField;
     @NotBlank
     private CareerExperience requiredMinimumCareerExperience;
     @NotBlank
@@ -29,7 +30,7 @@ public class WriteProposalForm {
     private String welfare;
 
     @Builder
-    public WriteProposalForm(Company company, InterestField interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
+    public WriteProposalForm(Company company, JobCategory interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
         this.company = company;
         this.interestField = interestField;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import kimchisoup.matchingjob.entity.common.BaseTime;
 import kimchisoup.matchingjob.entity.common.CareerExperience;
 import kimchisoup.matchingjob.entity.common.EducationField;
+import kimchisoup.matchingjob.entity.common.RegionType;
+import kimchisoup.matchingjob.entity.dto.WriteResumeForm;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,5 +53,22 @@ public class Resume extends BaseTime {
         this.awards = awards;
         this.link = link;
         this.jobSeekerUser = jobSeekerUser;
+    }
+
+    public Resume toEntity(WriteResumeForm dto, JobSeekerUser jobSeekerUser){
+        return Resume.builder()
+                .selfIntroduction(dto.getSelfIntroduction())
+                .careerExperience(dto.getCareerExperience())
+                .projects(dto.getProjects())
+                .portfolio(dto.getPortfolio())
+                .name(dto.getName())
+                .age(dto.getAge())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNumber())
+                .educationField(getEducationField())
+                .skills(dto.getSkills())
+                .awards(dto.getAwards())
+                .link(dto.getLink())
+                .jobSeekerUser(jobSeekerUser).build();
     }
 }
