@@ -13,10 +13,10 @@
 <h2>로그인 화면 </h2>
 <form method="post" action="/login">
     <div>
-        <input type="text" th:name="username" placeholder="이메일" autofocus=""/>
+        <input type="text" th:name="username" placeholder="이메일" autofocus="" required/>
     </div>
     <div>
-        <input type="text" th:name="password" placeholder="비밀번호"/>
+        <input type="text" th:name="password" placeholder="비밀번호" required/>
     </div>
     <div>
         <input type="checkbox" name="remember-me"/>자동 로그인
