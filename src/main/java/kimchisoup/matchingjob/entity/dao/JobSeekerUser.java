@@ -49,4 +49,8 @@ public class JobSeekerUser extends SiteUser {
     public void addProposal(JobSeekerUserProposal proposal) {
         this.jobSeekerUserProposals.add(proposal);
     }
+
+    public void addResume(Resume resume) {
+        this.resumes.add(resume);
+    }
 }

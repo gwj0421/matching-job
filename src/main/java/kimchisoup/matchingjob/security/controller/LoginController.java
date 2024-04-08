@@ -3,11 +3,13 @@ package kimchisoup.matchingjob.security.controller;
 import jakarta.validation.Valid;
 import kimchisoup.matchingjob.entity.dao.SiteUser;
 import kimchisoup.matchingjob.repository.SiteUserRepository;
-import kimchisoup.matchingjob.security.entity.*;
+import kimchisoup.matchingjob.security.entity.ChangePasswordForm;
+import kimchisoup.matchingjob.security.entity.CustomUserDetails;
+import kimchisoup.matchingjob.security.entity.ResetPasswordAuthForm;
+import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
 import kimchisoup.matchingjob.utils.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -103,11 +105,7 @@ public class LoginController {
     public String sendSMS(String phoneNumber, Model model) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        SMSRequest requestBody = new SMSRequest(SMSType.SMS.name(), "01034754617", "textContent", "01077524617");
 
-        new HttpEntity<>(requestBody, headers);
-
-//        Employee employee = restTemplate.postForObject(String.format(apiUrl,), request, Employee.class);
         return "ResetPassword";
     }
 

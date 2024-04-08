@@ -1,6 +1,8 @@
 package kimchisoup.matchingjob.utils;
 
 import kimchisoup.matchingjob.entity.dao.JobSeekerUser;
+import kimchisoup.matchingjob.entity.dao.Resume;
+import kimchisoup.matchingjob.entity.dto.ResumeForm;
 import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,25 @@ public class DtoMapper {
                 .profileImageUrl(profileImageUtils.saveImageAndReturnUrl(form.getProfileImage()))
                 .githubToken(form.getGithubToken())
                 .residence(form.getResidence())
+                .build();
+    }
+
+    public Resume toResume(ResumeForm resumeForm,JobSeekerUser jobSeekerUser) {
+        return Resume.builder()
+                .idPhoto(profileImageUtils.saveImageAndReturnUrl(resumeForm.getIdPhoto()))
+                .birthdate(resumeForm.getBirthdate())
+                .selfIntroduction(resumeForm.getSelfIntroduction())
+                .careerExperience(resumeForm.getCareerExperience())
+                .projects(resumeForm.getProjects())
+                .portfolio(resumeForm.getPortfolio())
+                .name(resumeForm.getName())
+                .email(resumeForm.getEmail())
+                .phoneNumber(resumeForm.getPhoneNumber())
+                .educationField(resumeForm.getEducationField())
+                .skills(resumeForm.getSkills())
+                .awards(resumeForm.getAwards())
+                .link(resumeForm.getLink())
+                .jobSeekerUser(jobSeekerUser)
                 .build();
     }
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 작성</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">이력서 작성</h2>
+    <form id="resumeForm" action="#" th:method="post" th:object="${resume}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('idPhoto')}" th:errors="*{idPhoto}"></div>
+            <label th:for="*{idPhoto}" class="form-label">사진</label>
+            <input type="file" class="form-control" th:field="*{idPhoto}" accept="image/*">
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            <label th:for="*{name}" class="form-label">이름</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+            <label th:for="*{birthdate}" class="form-label">생년월일</label>
+            <input type="date" class="form-control" th:field="*{birthdate}" required>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <label th:for="*{email}" class="form-label">이메일</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+            <label th:for="*{phoneNumber}" class="form-label">전화번호</label>
+            <input type="tel" class="form-control" th:field="*{phoneNumber}" required>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('selfIntroduction')}" th:errors="*{selfIntroduction}"></div>
+            <label th:for="*{selfIntroduction}" class="form-label">자기소개</label>
+            <input type="text" class="form-control" id="address" th:field="*{selfIntroduction}" required>
+        </div>
+
+        <!-- 경력 섹션 -->
+        <div class="mb-4">
+            <h4 class="mb-3">경력</h4>
+            <div class="row">
+                <div class="col">
+                    <div th:if="${#fields.hasErrors('careerExperience')}" th:errors="*{careerExperience}"></div>
+                    <label th:for="*{careerExperience}" class="form-label">최종 경력</label>
+                    <select th:field="*{careerExperience}" required>
+                        <option th:each="carrer : ${T(kimchisoup.matchingjob.entity.common.CareerExperience).values()}"
+                                th:value="${carrer}" th:text="${carrer.desc}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('educationField')}" th:errors="*{educationField}"></div>
+                    <label th:for="*{educationField}" class="form-label">최종 학력</label>
+                    <select th:field="*{educationField}" required>
+                        <option th:each="education : ${T(kimchisoup.matchingjob.entity.common.EducationField).values()}"
+                                th:value="${education}" th:text="${education.desc}"></option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('portfolio')}" th:errors="*{portfolio}"></div>
+                    <input type="text" class="form-control" placeholder="포트폴리오" th:field="*{portfolio}" required>
+                    <div th:if="${#fields.hasErrors('projects')}" th:errors="*{projects}"></div>
+                    <input type="text" class="form-control" placeholder="프로젝트" th:field="*{projects}" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- 기타 섹션 -->
+        <div class="mb-4">
+            <h4 class="mb-3">기타</h4>
+            <div class="mb-3">
+                <div th:if="${#fields.hasErrors('skills')}" th:errors="*{skills}"></div>
+                <label th:for="*{skills}" class="form-label">skills</label>
+                <textarea class="form-control" rows="3" th:field="*{skills}"></textarea>
+            </div>
+            <div class="mb-3">
+                <div th:if="${#fields.hasErrors('certificate')}" th:errors="*{certificate}"></div>
+                <label th:for="*{certificate}" class="form-label">자격증</label>
+                <textarea class="form-control" rows="3" th:field="*{certificate}"></textarea>
+            </div>
+            <div class="mb-3">
+                <div th:if="${#fields.hasErrors('awards')}" th:errors="*{awards}"></div>
+                <label th:for="*{awards}" class="form-label">수상 내역</label>
+                <textarea class="form-control" rows="3" th:field="*{awards}"></textarea>
+            </div>
+            <div class="mb-3">
+                <div th:if="${#fields.hasErrors('link')}" th:errors="*{link}"></div>
+                <label th:for="*{link}" class="form-label">link</label>
+                <textarea class="form-control"  rows="3" th:field="*{link}"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">제출</button>
+    </form>
+</div>
+</body>
+</html>

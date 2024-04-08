@@ -20,7 +20,7 @@ public class ProfileImageUtils {
     private String profileDefaultImagePath;
 
     public URL saveImageAndReturnUrl(MultipartFile profileImage) {
-        if (profileImage.isEmpty()) {
+        if (profileImage == null) {
             try {
                 return new URL(profileDefaultImagePath);
             } catch (MalformedURLException e) {
