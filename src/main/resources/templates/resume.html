@@ -7,49 +7,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<script>
-    fetch("/api/endpoint", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            key1: "value1",
-            key2: "value2"
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-            // 요청이 성공적으로 완료된 경우의 처리
-            console.log(data);
-        })
-        .catch(error => {
-            // 오류 처리
-            console.error('Error:', error);
-        });
-</script>
 <div class="container mt-4">
     <h2 class="text-center mb-4">이력서 작성</h2>
-    <form action="java/kimchisoup.matchingjob/service/WriteResumeServiceImpl.java" th:action="@{/submitted}" method="post">
+    <form id="resumeForm" th:action="@{/submitted}" th:method="post" th:object="${resume}">
         <div class="mb-3">
             <label for="profilePicture" class="form-label">사진</label>
             <input type="file" class="form-control" id="profilePicture" name="profilePicture">
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" th:name="name" th:value="${user.name}" required>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" th:name="email" th:value="${user.email}" required>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required>
         </div>
         <div class="mb-3">
             <label for="phone" class="form-label">전화번호</label>
-            <input type="tel" class="form-control" id="phone" th:name="phoneNumber" th:value="${user.phoneNumber}" required>
+            <input type="tel" class="form-control" id="phone" th:field="*{phoneNumber}" required>
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">자기소개</label>
-            <input type="text" class="form-control" id="address" name="selfIntroduction" th:value="${user.selfIntroduction}" required >
+            <input type="text" class="form-control" id="address" th:field="*{selfIntroduction}" required >
         </div>
 
         <!-- 경력 섹션 -->
@@ -58,18 +37,18 @@
             <div th:each="index : ${#numbers.sequence(1, 1)}" class="mb-3">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'companyName' + ${index}" th:name="'careerExperience' + ${index}" placeholder="경력" th:value="${user.careerExperience}" required>
+                        <input type="text" class="form-control" th:id="'companyName' + ${index}" placeholder="경력" th:field="*{careerExperience}" required>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'position' + ${index}" th:name="'projects' + ${index}" placeholder="프로젝트" th:value="${user.projects}" required>
+                        <input type="text" class="form-control" th:id="'position' + ${index}" placeholder="프로젝트" th:field="*{projects}" required>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'employmentPeriod' + ${index}" th:name="'portfolio' + ${index}" placeholder="포트폴리오" th:value="${user.portfolio}" required>
+                        <input type="text" class="form-control" th:id="'employmentPeriod' + ${index}" placeholder="포트폴리오" th:field="*{portfolio}" required>
                     </div>
                     <div class="col">
-                        <textarea class="form-control" th:id="'responsibilities' + ${index}" th:name="'age' + ${index}" rows="3" placeholder="나이" th:value="${user.age}" required></textarea>
+                        <textarea class="form-control" th:id="'responsibilities' + ${index}" rows="3" placeholder="나이" th:field="*{age}" required></textarea>
                     </div>
                 </div>
             </div>
@@ -81,18 +60,18 @@
             <div th:each="index : ${#numbers.sequence(1, 1)}" class="mb-3">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'schoolName' + ${index}" th:name="'schoolName' + ${index}" placeholder="educationfield" required>
+                        <input type="text" class="form-control" th:id="'schoolName' + ${index}" placeholder="educationfield" required>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'major' + ${index}" th:name="'major' + ${index}" placeholder="전공" required>
+                        <input type="text" class="form-control" th:id="'major' + ${index}" placeholder="전공" required>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'degree' + ${index}" th:name="'degree' + ${index}" placeholder="학위" required>
+                        <input type="text" class="form-control" th:id="'degree' + ${index}" placeholder="학위" required>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" th:id="'graduationYear' + ${index}" th:name="'graduationYear' + ${index}" placeholder="졸업 연도" required>
+                        <input type="text" class="form-control" th:id="'graduationYear' + ${index}" placeholder="졸업 연도" required>
                     </div>
                 </div>
             </div>
@@ -103,24 +82,31 @@
             <h4 class="mb-3">기타</h4>
             <div class="mb-3">
                 <label for="skills" class="form-label">skills</label>
-                <textarea class="form-control" id="skills" name="skills" rows="3" th:value="${user.skills}"></textarea>
+                <textarea class="form-control" id="skills" rows="3" th:field="*{skills}"></textarea>
             </div>
             <div class="mb-3">
                 <label for="certifications" class="form-label">자격증</label>
-                <textarea class="form-control" id="certifications" name="certifications" rows="3" ></textarea>
+                <textarea class="form-control" id="certifications" rows="3" ></textarea>
             </div>
             <div class="mb-3">
                 <label for="awards" class="form-label">수상 내역</label>
-                <textarea class="form-control" id="awards" name="awards" rows="3"th:value="${user.awards}"></textarea>
+                <textarea class="form-control" id="awards" rows="3" th:field="*{awards}"></textarea>
             </div>
             <div class="mb-3">
                 <label for="projects" class="form-label">link</label>
-                <textarea class="form-control" id="projects" name="projects" rows="3" th:value="${user.link}"></textarea>
+                <textarea class="form-control" id="projects" rows="3" th:field="*{link}"></textarea>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block">제출</button>
+        <button th:id="submitBtn" type="submit" class="btn btn-primary btn-block">제출</button>
     </form>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('resumeForm').submit();
+        });
+        /*]]>*/
+    </script>
 </div>
 </body>
 </html>

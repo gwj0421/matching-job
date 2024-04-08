@@ -13,9 +13,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "RESUME")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Resume extends BaseTime {
+
+    // todo 취업이미지 서버 내 저장.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +38,8 @@ public class Resume extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "job_seeker_id")
     private JobSeekerUser jobSeekerUser;
+
+    public Resume(){}
 
     @Builder
     public Resume(String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, int age, String email, String phoneNumber, EducationField educationField, String skills, String awards, String link, JobSeekerUser jobSeekerUser) {
