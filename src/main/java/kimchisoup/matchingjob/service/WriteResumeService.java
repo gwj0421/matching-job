@@ -1,18 +1,11 @@
 package kimchisoup.matchingjob.service;
 
-import jakarta.validation.constraints.Null;
-import jdk.swing.interop.SwingInterOpUtils;
-import kimchisoup.matchingjob.entity.common.CareerExperience;
-import kimchisoup.matchingjob.entity.common.EducationField;
 import kimchisoup.matchingjob.entity.dao.JobSeekerUser;
 import kimchisoup.matchingjob.entity.dao.Resume;
-import kimchisoup.matchingjob.entity.dto.WriteResumeForm;
+import kimchisoup.matchingjob.entity.dto.WritingResumeForm;
 import kimchisoup.matchingjob.repository.JobSeekerUserRepository;
 import kimchisoup.matchingjob.repository.ResumeRepository;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
-
-import static kimchisoup.matchingjob.entity.common.CareerExperience.FRESH_MAN;
 
 @Service
 public class WriteResumeService {
@@ -22,11 +15,11 @@ public class WriteResumeService {
         this.jobSeekerUserRepository = jobSeekerUserRepository;
         this.resumeRepository = resumeRepository;
     }
-    public void create(WriteResumeForm writeResumeForm) {
-        System.out.println(writeResumeForm.getName());
-        JobSeekerUser jobSeekerUser = jobSeekerUserRepository.findByEmail(writeResumeForm.getEmail());
-        Resume resume = new Resume("", CareerExperience.FRESH_MAN, "","","",0,"","",EducationField.BACHELOR,"","","", jobSeekerUser);
-        resumeRepository.save(resume.toEntity(writeResumeForm, jobSeekerUser));
+    public void create(WritingResumeForm writingResumeForm) {
+        System.out.println(writingResumeForm.getName());
+        JobSeekerUser jobSeekerUser = jobSeekerUserRepository.findByEmail(writingResumeForm.getEmail());
+        Resume resume = new Resume();
+        resumeRepository.save(resume.toEntity(writingResumeForm, jobSeekerUser));
     }
 
     public Resume findUserByEmail(String email) {

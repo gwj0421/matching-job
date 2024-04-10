@@ -1,12 +1,13 @@
 package kimchisoup.matchingjob.entity.dto;
 
 import kimchisoup.matchingjob.entity.common.CareerExperience;
-import kimchisoup.matchingjob.entity.dao.Resume;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
-public class WriteResumeForm {
+public class WritingResumeForm {
     private String selfIntroduction;
     private CareerExperience careerExperience;
     private String projects;
@@ -23,11 +24,11 @@ public class WriteResumeForm {
     private String link;
 
 
-    public WriteResumeForm() {
+    public WritingResumeForm() {
     }
 
     @Builder
-    public WriteResumeForm(String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, int age, String email, String phoneNumber, String skills, String awards, String link) {
+    public WritingResumeForm(String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, int age, String email, String phoneNumber, String skills, String awards, String link) {
         this.selfIntroduction = selfIntroduction;
         this.careerExperience = careerExperience;
         this.projects = projects;

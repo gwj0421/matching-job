@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 import kimchisoup.matchingjob.entity.common.BaseTime;
 import kimchisoup.matchingjob.entity.common.CareerExperience;
 import kimchisoup.matchingjob.entity.common.EducationField;
-import kimchisoup.matchingjob.entity.common.RegionType;
-import kimchisoup.matchingjob.entity.dto.WriteResumeForm;
-import lombok.AccessLevel;
+import kimchisoup.matchingjob.entity.dto.WritingResumeForm;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "RESUME")
@@ -58,7 +55,7 @@ public class Resume extends BaseTime {
         this.jobSeekerUser = jobSeekerUser;
     }
 
-    public Resume toEntity(WriteResumeForm dto, JobSeekerUser jobSeekerUser){
+    public Resume toEntity(WritingResumeForm dto, JobSeekerUser jobSeekerUser){
         return Resume.builder()
                 .selfIntroduction(dto.getSelfIntroduction())
                 .careerExperience(dto.getCareerExperience())
