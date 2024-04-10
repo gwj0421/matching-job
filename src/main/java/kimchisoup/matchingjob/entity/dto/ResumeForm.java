@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
-@Getter
 @Setter
+@Getter
 public class ResumeForm {
     @NotNull
     private MultipartFile idPhoto;

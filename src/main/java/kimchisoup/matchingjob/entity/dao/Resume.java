@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import kimchisoup.matchingjob.entity.common.BaseTime;
 import kimchisoup.matchingjob.entity.common.CareerExperience;
 import kimchisoup.matchingjob.entity.common.EducationField;
-import kimchisoup.matchingjob.entity.dto.WritingResumeForm;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class WriteProposalForm {
+public class ProposalForm {
     @NotBlank
     private Company company;
     @NotBlank
@@ -30,7 +30,7 @@ public class WriteProposalForm {
     private String welfare;
 
     @Builder
-    public WriteProposalForm(Company company, JobCategory interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
+    public ProposalForm(Company company, JobCategory interestField, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt) {
         this.company = company;
         this.interestField = interestField;
         this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;

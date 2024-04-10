@@ -6,7 +6,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 @Getter
-public class WriteCompanyForm {
+public class CompanyForm {
     private String name;
     private int peopleCnt;
     private BigDecimal sales;
@@ -15,7 +15,7 @@ public class WriteCompanyForm {
     private String introduction;
 
     @Builder
-    public WriteCompanyForm(String name, int peopleCnt, BigDecimal sales, String address, Industry industry, String introduction) {
+    public CompanyForm(String name, int peopleCnt, BigDecimal sales, String address, Industry industry, String introduction) {
         this.name = name;
         this.peopleCnt = peopleCnt;
         this.sales = sales;
