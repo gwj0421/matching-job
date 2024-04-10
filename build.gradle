@@ -32,15 +32,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // h2 & redis
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    // spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // coolsms
+    implementation 'net.nurigo:sdk:4.2.7'
 }
 
 tasks.named('test') {
