@@ -1,7 +1,7 @@
 package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
-import kimchisoup.matchingjob.entity.common.Authority;
+import kimchisoup.matchingjob.security.entity.Authority;
 import kimchisoup.matchingjob.entity.common.RegionType;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +33,7 @@ public class JobSeekerUser extends SiteUser {
 
     @Builder
     public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, Authority authority, String githubToken, RegionType residence) {
-        super(name, email, password, phoneNumber, nickName, profileImageUrl, authority);
+        super(name, email, password, phoneNumber, nickName, profileImageUrl, Authority.JOB_SEEKER);
         this.githubToken = githubToken;
         this.residence = residence;
     }
@@ -48,5 +48,9 @@ public class JobSeekerUser extends SiteUser {
 
     public void addProposal(JobSeekerUserProposal proposal) {
         this.jobSeekerUserProposals.add(proposal);
+    }
+
+    public void addResume(Resume resume) {
+        this.resumes.add(resume);
     }
 }

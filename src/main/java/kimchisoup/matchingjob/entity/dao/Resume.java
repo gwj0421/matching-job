@@ -8,6 +8,9 @@ import kimchisoup.matchingjob.entity.dto.WritingResumeForm;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.net.URL;
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "RESUME")
 @Getter
@@ -17,13 +20,14 @@ public class Resume extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private URL idPhoto;
+    private LocalDate birthdate;
     private String selfIntroduction;
     @Enumerated(EnumType.STRING)
     private CareerExperience careerExperience;
     private String projects;
     private String portfolio;
     private String name;
-    private int age;
     private String email;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
@@ -39,13 +43,14 @@ public class Resume extends BaseTime {
     public Resume(){}
 
     @Builder
-    public Resume(String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, int age, String email, String phoneNumber, EducationField educationField, String skills, String awards, String link, JobSeekerUser jobSeekerUser) {
+    public Resume(URL idPhoto, LocalDate birthdate, String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, String email, String phoneNumber, EducationField educationField, String skills, String awards, String link, JobSeekerUser jobSeekerUser) {
+        this.idPhoto = idPhoto;
+        this.birthdate = birthdate;
         this.selfIntroduction = selfIntroduction;
         this.careerExperience = careerExperience;
         this.projects = projects;
         this.portfolio = portfolio;
         this.name = name;
-        this.age = age;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.educationField = educationField;

@@ -4,6 +4,6 @@ import kimchisoup.matchingjob.entity.dao.SuccessfulResume;
 
 import java.util.List;
 
-public interface CommonService {
+public interface SuccessfulResumeService {
     List<SuccessfulResume> findSuccessfulResumeByCompanyId(Long companyId);
 }

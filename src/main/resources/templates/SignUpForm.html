@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>회원가입 화면 </h2>
+<form th:action="@{/signUp}" method="post" enctype="multipart/form-data" th:object="${signUpForm}">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <input type="text" th:field="*{name}" placeholder="Name" required><br>
+
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <input type="email" name="email" th:field="*{email}" placeholder="Email" required><br>
+
+    <div th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}"></div>
+    <input type="password" th:field="*{password1}" placeholder="Password" required><br>
+
+    <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></div>
+    <input type="password" th:field="*{password2}" placeholder="Confirm Password" required><br>
+
+    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+    <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required><br>
+
+    <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}"></div>
+    <input type="text" th:field="*{nickName}" placeholder="Nick Name" required><br>
+
+    <input type="text" th:field="*{githubToken}" placeholder="GitHub Token"><br>
+    <select th:field="*{residence}" required>
+        <option th:each="region : ${T(kimchisoup.matchingjob.entity.common.RegionType).values()}"
+                th:value="${region}" th:text="${region.desc}"></option>
+    </select>
+
+    <!-- 프로필 이미지 업로드 -->
+    <input type="file" name="profileImage" accept="image/*"><br>
+
+    <button type="submit">Sign Up</button>
+</form>
+</body>
+</html>

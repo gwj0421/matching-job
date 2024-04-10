@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommonServiceImpl implements CommonService {
+public class SuccessfulResumeServiceImpl implements SuccessfulResumeService {
     private final SuccessfulResumeRepository successfulResumeRepository;
 
     // todo : 이 후에, DTO에 맞춰 리턴 타입 변경 필요
