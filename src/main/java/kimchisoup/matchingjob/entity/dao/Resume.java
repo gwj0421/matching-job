@@ -60,20 +60,4 @@ public class Resume extends BaseTime {
         this.jobSeekerUser = jobSeekerUser;
     }
 
-    public Resume toEntity(WritingResumeForm dto, JobSeekerUser jobSeekerUser){
-        return Resume.builder()
-                .selfIntroduction(dto.getSelfIntroduction())
-                .careerExperience(dto.getCareerExperience())
-                .projects(dto.getProjects())
-                .portfolio(dto.getPortfolio())
-                .name(dto.getName())
-                .age(dto.getAge())
-                .email(dto.getEmail())
-                .phoneNumber(dto.getPhoneNumber())
-                .educationField(getEducationField())
-                .skills(dto.getSkills())
-                .awards(dto.getAwards())
-                .link(dto.getLink())
-                .jobSeekerUser(jobSeekerUser).build();
-    }
 }
