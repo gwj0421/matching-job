@@ -1,15 +1,16 @@
 package kimchisoup.matchingjob.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kimchisoup.matchingjob.config.properties.CoolSMSProperty;
 import kimchisoup.matchingjob.repository.*;
-import kimchisoup.matchingjob.service.ResumeService;
-import kimchisoup.matchingjob.service.ResumeServiceImpl;
-import kimchisoup.matchingjob.service.SuccessfulResumeService;
-import kimchisoup.matchingjob.service.SuccessfulResumeServiceImpl;
+import kimchisoup.matchingjob.service.*;
 import kimchisoup.matchingjob.utils.DtoMapper;
 import lombok.RequiredArgsConstructor;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -19,6 +20,10 @@ public class ServiceConfig {
     private final SuccessfulResumeRepository successfulResumeRepository;
     private final ResumeRepository resumeRepository;
     private final DtoMapper dtoMapper;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final CoolSMSProperty coolSMSProperty;
+    private final DefaultMessageService messageService;
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
     ObjectMapper objectMapper() {
@@ -31,12 +36,27 @@ public class ServiceConfig {
     }
 
     @Bean
+    SiteUserService siteUserService() {
+        return new SiteUserServiceImpl(userRepository, dtoMapper, passwordEncoder);
+    }
+
+    @Bean
     ResumeService resumeService() {
-        return new ResumeServiceImpl(userRepository,resumeRepository,dtoMapper);
+        return new ResumeServiceImpl(resumeRepository, siteUserService(), dtoMapper);
     }
 
     @Bean
     SuccessfulResumeService commonService() {
         return new SuccessfulResumeServiceImpl(successfulResumeRepository);
+    }
+
+    @Bean
+    SMSService smsService() {
+        return new SMSServiceImpl(coolSMSProperty, messageService, siteUserService(), redisService());
+    }
+
+    @Bean
+    RedisService redisService() {
+        return new RedisServiceImpl(stringRedisTemplate);
     }
 }

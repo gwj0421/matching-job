@@ -2,31 +2,30 @@ package kimchisoup.matchingjob.security.controller;
 
 import jakarta.validation.Valid;
 import kimchisoup.matchingjob.entity.dao.SiteUser;
-import kimchisoup.matchingjob.repository.SiteUserRepository;
 import kimchisoup.matchingjob.security.entity.ChangePasswordForm;
 import kimchisoup.matchingjob.security.entity.CustomUserDetails;
-import kimchisoup.matchingjob.security.entity.ResetPasswordAuthForm;
+import kimchisoup.matchingjob.security.entity.PhoneAuthForm;
 import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
-import kimchisoup.matchingjob.utils.DtoMapper;
+import kimchisoup.matchingjob.service.SMSService;
+import kimchisoup.matchingjob.service.SiteUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class LoginController {
-    private final SiteUserRepository userRepository;
-    private final DtoMapper dtoMapper;
-    private final PasswordEncoder passwordEncoder;
+    private final SMSService smsService;
+    private final SiteUserService siteUserService;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")
@@ -48,17 +47,13 @@ public class LoginController {
     public String signUp(@Valid @ModelAttribute(name = "signUpForm") SignUpForJobSeekerForm signUpForm,
                          BindingResult bindingResult,
                          Model model) {
-        if (!signUpForm.getPassword1().equals(signUpForm.getPassword2())) {
-            bindingResult.rejectValue("password2", "error.password2", "비밀번호 불일치");
-        }
-        if (userRepository.existsByEmail(signUpForm.getEmail())) {
-            bindingResult.rejectValue("email", "error.email", "존재하는 이메일입니다");
-        }
+        siteUserService.checkMatchPassword(signUpForm.getPassword1(), signUpForm.getPassword2(), bindingResult, "password2");
+        siteUserService.checkExistEmail(signUpForm.getEmail(),bindingResult,"email");
 
         if (bindingResult.hasErrors()) {
             return "SignUpForm";
         }
-        userRepository.save(dtoMapper.toJobSeekerUser(signUpForm));
+        siteUserService.saveUser(signUpForm);
 
         return "redirect:/login";
     }
@@ -73,52 +68,46 @@ public class LoginController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/changePassword")
     public String changePassword(@AuthenticationPrincipal CustomUserDetails user,
-                                    @Valid @ModelAttribute(name = "changePasswordForm") ChangePasswordForm changePasswordForm,
+                                 @Valid @ModelAttribute(name = "changePasswordForm") ChangePasswordForm changePasswordForm,
                                  BindingResult bindingResult,
                                  Model model) {
-        if (!changePasswordForm.getNewPassword().equals(changePasswordForm.getNewPasswordForCheck())) {
-            bindingResult.rejectValue("newPasswordForCheck", "error.newPasswordForCheck", "비밀번호 불일치");
-        }
-        SiteUser findUser = (SiteUser) userRepository.findByEmail(user.getUsername()).get();
-        if (!passwordEncoder.matches(changePasswordForm.getPassword(), findUser.getPassword())) {
-            bindingResult.rejectValue("password", "error.password", "이전 비밀번호가 맞지 않습니다");
-        }
+        siteUserService.checkMatchPassword(changePasswordForm.getNewPassword(),changePasswordForm.getNewPasswordForCheck(),bindingResult,"newPasswordForCheck");
+        Optional<SiteUser> findUser = siteUserService.checkPasswordByEmail(changePasswordForm.getPassword(), user.getUsername(), bindingResult, "password");
+
         if (bindingResult.hasErrors()) {
             return "ChangePasswordForm";
         }
-        findUser.changePassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
-        userRepository.save(findUser);
 
+        siteUserService.changePassword(findUser, changePasswordForm.getNewPassword());
         return "redirect:/";
     }
 
     @PreAuthorize("isAnonymous()")
-    @GetMapping("/sms-certification")
+    @GetMapping("/findId")
     public String sendSMS(Model model) {
-        model.addAttribute("resetPasswordAuthForm", new ResetPasswordAuthForm());
-        return "ResetPassword";
+        model.addAttribute("phoneAuthForm", new PhoneAuthForm());
+        return "FindEmail";
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/sms-certification/send")
     @ResponseBody
-    public String sendSMS(String phoneNumber, Model model) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-        return "ResetPassword";
+    public ResponseEntity sendSMS(String phoneNumber, Model model) {
+        return smsService.sendSMS(phoneNumber);
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/sms-certification/confirm")
-    public String confirmSMS(@Valid ResetPasswordAuthForm resetPasswordAuthForm,
+    public String confirmSMS(@Valid @ModelAttribute(name = "phoneAuthForm") PhoneAuthForm phoneAuthForm,
                              BindingResult bindingResult,
                              Model model) {
+        String email = smsService.verifySMS(phoneAuthForm, bindingResult, "inputCode");
 
         if (bindingResult.hasErrors()) {
-            return "/sms-certification/confirm";
+            return "FindEmail";
         }
-        log.info("gwj confirmSMS");
-        return "redirect:/login";
+
+        model.addAttribute("email", email);
+        return "ShowFindEmailForm";
     }
 }

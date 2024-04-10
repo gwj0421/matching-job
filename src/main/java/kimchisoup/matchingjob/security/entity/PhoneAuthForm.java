@@ -4,21 +4,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class ResetPasswordAuthForm {
+@Setter
+public class PhoneAuthForm {
     @NotBlank
     @Size(min = 9,max = 11)
     private String phoneNumber;
     @NotBlank
-    private String authCode;
+    private String inputCode;
 
-    public ResetPasswordAuthForm() {
+    public PhoneAuthForm() {
     }
 
     @JsonCreator
-    public ResetPasswordAuthForm(String phoneNumber, String authCode) {
+    public PhoneAuthForm(String phoneNumber, String inputCode) {
         this.phoneNumber = phoneNumber;
-        this.authCode = authCode;
+        this.inputCode = inputCode;
     }
 }

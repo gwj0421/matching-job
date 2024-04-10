@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface SiteUserRepository<T extends SiteUser> extends JpaRepository<T, Long> {
     Optional<T> findByEmail(String email);
 
+    Optional<T> findByPhoneNumber(String phoneNumber);
+
     boolean existsByEmail(String email);
 }

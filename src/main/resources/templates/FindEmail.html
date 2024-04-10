@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<form th:action="@{/sms-certification/confirm}" method="post" th:object="${resetPasswordAuthForm}">
+<form th:action="@{/sms-certification/confirm}" method="post" th:object="${phoneAuthForm}">
     <div>
-        <input type="text" id="phoneNumber" placeholder="전화번호" required><br>
+        <input type="text" th:field="*{phoneNumber}" placeholder="전화번호" required><br>
         <button type="button" onclick="submitForm()">요청</button>
     </div>
-    <div th:if="${#fields.hasErrors('authCode')}" th:errors="*{authCode}"></div>
+    <div th:if="${#fields.hasErrors('inputCode')}" th:errors="*{inputCode}"></div>
     <div>
-        <input type="text" th:field="*{authCode}" placeholder="인증 코드" required><br>
+        <input type="text" th:field="*{inputCode}" placeholder="인증 코드" required><br>
         <button type="submit">인증</button>
     </div>
 
