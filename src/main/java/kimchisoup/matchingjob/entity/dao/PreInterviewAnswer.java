@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "PRE_INTERVIEW_LIST")
+@Table(name = "PRE_INTERVIEW_ANSWER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class PreInterviewAnswer {
@@ -20,17 +20,18 @@ public class PreInterviewAnswer {
     @Column(name = "answer")
     private String answer;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "jobSeekerUser_id")
-    private List<JobSeekerUser> jobSeekerUsers;
+    private JobSeekerUser jobSeekerUser;
 
-    @OneToOne(mappedBy = "preInterviewAnswer")
+    @ManyToOne
+    @JoinColumn(name = "pre_interview_question_id")
     private PreInterviewQuestion preInterviewQuestion;
 
     @Builder
-    public PreInterviewAnswer(PreInterviewQuestion preInterviewQuestion, List<JobSeekerUser> jobSeekerUsers, String answer) {
+    public PreInterviewAnswer(PreInterviewQuestion preInterviewQuestion, JobSeekerUser jobSeekerUsers, String answer) {
         this.preInterviewQuestion = preInterviewQuestion;
-        this.jobSeekerUsers = jobSeekerUsers;
+        this.jobSeekerUser = jobSeekerUsers;
         this.answer = answer;
     }
 }

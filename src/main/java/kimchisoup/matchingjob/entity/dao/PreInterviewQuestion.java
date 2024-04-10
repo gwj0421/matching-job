@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,19 +22,22 @@ public class PreInterviewQuestion {
     private String questionText;
 
     @ManyToOne
-    @JoinColumn(name = "headhunter_id")
-    private HeadHunterUser headHunter;
+    @JoinColumn(name = "head_hunter_user_id")
+    private HeadHunterUser headHunterUser;
 
     @OneToMany
-    @JoinColumn(name = "pre_interview_list_id")
-    private List<PreInterviewAnswer> preInterviewAnswers;
+   // @JoinColumn(name = "preInterviewQuestion")
+    private List<PreInterviewAnswer> preInterviewAnswers = new ArrayList<>();
 
     @Builder
-    public PreInterviewQuestion(String questionText, HeadHunterUser headHunter, List<PreInterviewAnswer> preInterviewAnswers) {
+    public PreInterviewQuestion(String questionText, HeadHunterUser headHunterUser) {
         this.questionText = questionText;
-        this.headHunter = headHunter;
-        this.preInterviewAnswers = preInterviewAnswers;
+        this.headHunterUser = headHunterUser;
     }
 
+
+    public void addPreInterviewAnswer(PreInterviewAnswer preInterviewAnswer) { this.preInterviewAnswers.add(preInterviewAnswer); }
+
+    public void addHeadHunterUSser(HeadHunterUser headHunterUser) {}
 
 }

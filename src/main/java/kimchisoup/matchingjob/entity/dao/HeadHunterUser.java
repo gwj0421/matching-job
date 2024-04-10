@@ -22,6 +22,8 @@ public class HeadHunterUser extends SiteUser {
     @OneToMany(mappedBy = "headHunterUser")
     private List<Proposal> proposals = new ArrayList<>();
 
+    @OneToMany(mappedBy = "headHunterUser")
+    private List<PreInterviewQuestion> preInterviewQuestions = new ArrayList<>();
     @Builder
     public HeadHunterUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl) {
         super(name, email, password, phoneNumber, nickName, profileImageUrl);
@@ -30,4 +32,6 @@ public class HeadHunterUser extends SiteUser {
     public void addProposal(Proposal proposal) {
         this.proposals.add(proposal);
     }
+
+    public void addPreInterviewQuestion(PreInterviewQuestion preInterviewQuestion) {this.preInterviewQuestions.add(preInterviewQuestion);}
 }

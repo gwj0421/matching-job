@@ -31,6 +31,8 @@ public class JobSeekerUser extends SiteUser {
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<Resume> resumes = new ArrayList<>();
+    @OneToMany(mappedBy = "jobSeekerUser")
+    private List<PreInterviewAnswer> preInterviewAnswers = new ArrayList<>();
 
     @Builder
     public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, String githubToken, RegionType residence) {
@@ -50,4 +52,6 @@ public class JobSeekerUser extends SiteUser {
     public void addProposal(JobSeekerUserProposal proposal) {
         this.jobSeekerUserProposals.add(proposal);
     }
+
+    public void addPreInterviewAnswer(PreInterviewAnswer preInterviewAnswer) {this.preInterviewAnswers.add(preInterviewAnswer);}
 }
