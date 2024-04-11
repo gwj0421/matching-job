@@ -15,6 +15,8 @@ public interface SiteUserService {
 
     Optional<SiteUser> checkPasswordByEmail(String inputPassword, String email, BindingResult bindingResult, String errorField);
 
+    void checkCertification(boolean certified, BindingResult bindingResult, String errorField);
+
     void checkMatchPassword(String inputPassword, String checkPassword, BindingResult bindingResult, String errorField);
 
     void checkExistEmail(String email, BindingResult bindingResult, String errorField);

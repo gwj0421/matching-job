@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>SignUp</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <h2>회원가입 화면 </h2>
@@ -25,7 +21,17 @@
     <input type="password" th:field="*{password2}" placeholder="Confirm Password" required><br>
 
     <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
-    <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required><br>
+    <div>
+        <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required><br>
+        <button type="button" onclick="requestCertification()">인증 요청</button>
+    </div>
+
+    <div>
+        <div th:if="${#fields.hasErrors('certified')}" th:errors="*{certified}"></div>
+        <input type="hidden" th:field="*{certified}">
+        <input type="text" th:id="inputCode" placeholder="인증 코드"><br>
+        <button type="button" th:id="certificationButton" onclick="certification()">인증</button>
+    </div>
 
     <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}"></div>
     <input type="text" th:field="*{nickName}" placeholder="Nick Name" required><br>
@@ -41,5 +47,64 @@
 
     <button type="submit">Sign Up</button>
 </form>
+<script>
+    function requestCertification() {
+        var phoneNumber = $("#phoneNumber").val(); // Thymeleaf의 폼 데이터를 가져옴
+
+        $.ajax({
+            type: "POST",
+            url: "/sms-certification/send", // POST 요청을 보낼 URL
+            data: {phoneNumber: phoneNumber}, // 전송할 데이터
+            success: function (response) {
+                // 성공적으로 서버로부터 응답을 받은 경우 수행할 작업
+                console.log("Success:", response);
+                showOrHideCertificationInputCode(false);
+            },
+            error: function (request, status, error) {
+                // 서버로 요청을 보내는 중에 오류가 발생한 경우 수행할 작업
+                if (request.status === 400) {
+                    alert(request.responseText);
+                }
+            }
+        });
+    }
+
+    function certification() {
+        const phoneAuthForm = {
+            phoneNumber: $("#phoneNumber").val(),
+            inputCode: $("#inputCode").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "/sms-certification/confirm", // POST 요청을 보낼 URL
+            data: phoneAuthForm, // 전송할 데이터
+            success: function (response) {
+                $("#certified").val("true");
+                showOrHideCertificationInputCode(true);
+            },
+            error: function (request, status, error) {
+                if (request.status === 400) {
+                    $("#certified").val("false");
+                    alert(request.responseText);
+                }
+            }
+        });
+    }
+
+    function showOrHideCertificationInputCode(isCertified) {
+        if (isCertified) {
+            $("#inputCode").hide();
+            $("#certificationButton").hide();
+        } else {
+            $("#inputCode").show();
+            $("#certificationButton").show();
+        }
+    }
+
+    if ($("#certified")) {
+        $("#inputCode").hide();
+        $("#certificationButton").hide();
+    }
+</script>
 </body>
 </html>

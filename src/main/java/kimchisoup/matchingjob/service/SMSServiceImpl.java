@@ -36,13 +36,16 @@ public class SMSServiceImpl implements SMSService {
     }
 
     @Override
-    public ResponseEntity sendSMS(String phoneNumber) {
+    public ResponseEntity sendSMSResponse(String phoneNumber) {
+        if (phoneNumber.isBlank()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 전화번호 입니다");
+        }
         String certificationNumber = RandomUtils.createCertificationNumber();
         Message message = createMessage(phoneNumber, certificationNumber);
         try {
             messageService.send(message);
         } catch (NurigoMessageNotReceivedException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("송신 불가");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 전화번호 입니다");
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("확인할 수 없는 에러");
         }
@@ -53,7 +56,7 @@ public class SMSServiceImpl implements SMSService {
     @Override
     public String verifySMS(PhoneAuthForm phoneAuthForm, BindingResult bindingResult, String errorField) {
         if (!isValidCertificationNumber(phoneAuthForm)) {
-            bindingResult.rejectValue(errorField, "error." + errorField, "해당 번호로 등록된 회원정보 없음");
+            bindingResult.rejectValue(errorField, "error." + errorField, "잘못된 인증 번호");
             return null;
         }
         redisService.deleteValue(phoneAuthForm.getPhoneNumber());
@@ -64,6 +67,15 @@ public class SMSServiceImpl implements SMSService {
             return null;
         }
         return user.get().getEmail();
+    }
+
+    @Override
+    public ResponseEntity verifySMSResponse(PhoneAuthForm phoneAuthForm, BindingResult bindingResult) {
+        if (!isValidCertificationNumber(phoneAuthForm) || bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 인증 번호");
+        }
+        redisService.deleteValue(phoneAuthForm.getPhoneNumber());
+        return ResponseEntity.ok().build();
     }
 
     @Override

@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<form th:action="@{/sms-certification/confirm}" method="post" th:object="${phoneAuthForm}">
+<form th:action="@{/findEmail/confirm}" method="post" th:object="${phoneAuthForm}">
     <div>
         <input type="text" th:field="*{phoneNumber}" placeholder="전화번호" required><br>
         <button type="button" onclick="submitForm()">요청</button>
@@ -29,8 +29,12 @@
                     // 성공적으로 서버로부터 응답을 받은 경우 수행할 작업
                     console.log("Success:", response);
                 },
-                error: function(xhr, status, error) {
+                error: function (request, status, error) {
                     // 서버로 요청을 보내는 중에 오류가 발생한 경우 수행할 작업
+                    if (request.status === 400) {
+                        alert(request.responseText);
+                    }
+                    console.error("status:", status);
                     console.error("Error:", error);
                 }
             });

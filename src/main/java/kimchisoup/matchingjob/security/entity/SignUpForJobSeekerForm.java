@@ -16,8 +16,8 @@ public class SignUpForJobSeekerForm extends SingUpUserForm{
     }
 
     @JsonCreator
-    public SignUpForJobSeekerForm(String name, String email, String password1, String password2, String phoneNumber, String nickName, MultipartFile profileImage, String githubToken, RegionType residence) {
-        super(name, email, password1, password2, phoneNumber, nickName, profileImage);
+    public SignUpForJobSeekerForm(String name, String email, String password1, String password2, String phoneNumber, String nickName, MultipartFile profileImage, boolean certified, String githubToken, RegionType residence) {
+        super(name, email, password1, password2, phoneNumber, nickName, profileImage, certified);
         this.githubToken = githubToken;
         this.residence = residence;
     }

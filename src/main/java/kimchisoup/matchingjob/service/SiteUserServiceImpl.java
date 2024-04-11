@@ -48,6 +48,13 @@ public class SiteUserServiceImpl implements SiteUserService {
     }
 
     @Override
+    public void checkCertification(boolean certified, BindingResult bindingResult, String errorField) {
+        if (!certified) {
+            bindingResult.rejectValue(errorField,"error.certified","인증 미실시");
+        }
+    }
+
+    @Override
     public void checkMatchPassword(String inputPassword, String checkPassword, BindingResult bindingResult, String errorField) {
         if (!inputPassword.equals(checkPassword)) {
             bindingResult.rejectValue(errorField, "error.password", "비밀번호 불일치");
@@ -56,7 +63,7 @@ public class SiteUserServiceImpl implements SiteUserService {
 
     @Override
     public void checkExistEmail(String email, BindingResult bindingResult, String errorField) {
-        if (!userRepository.existsByEmail(email)) {
+        if (userRepository.existsByEmail(email)) {
             bindingResult.rejectValue(errorField, "error.email", "존재하는 이메일입니다");
         }
     }

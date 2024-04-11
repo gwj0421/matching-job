@@ -47,8 +47,9 @@ public class LoginController {
     public String signUp(@Valid @ModelAttribute(name = "signUpForm") SignUpForJobSeekerForm signUpForm,
                          BindingResult bindingResult,
                          Model model) {
+        siteUserService.checkCertification(signUpForm.isCertified(), bindingResult, "certified");
         siteUserService.checkMatchPassword(signUpForm.getPassword1(), signUpForm.getPassword2(), bindingResult, "password2");
-        siteUserService.checkExistEmail(signUpForm.getEmail(),bindingResult,"email");
+        siteUserService.checkExistEmail(signUpForm.getEmail(), bindingResult, "email");
 
         if (bindingResult.hasErrors()) {
             return "SignUpForm";
@@ -71,7 +72,7 @@ public class LoginController {
                                  @Valid @ModelAttribute(name = "changePasswordForm") ChangePasswordForm changePasswordForm,
                                  BindingResult bindingResult,
                                  Model model) {
-        siteUserService.checkMatchPassword(changePasswordForm.getNewPassword(),changePasswordForm.getNewPasswordForCheck(),bindingResult,"newPasswordForCheck");
+        siteUserService.checkMatchPassword(changePasswordForm.getNewPassword(), changePasswordForm.getNewPasswordForCheck(), bindingResult, "newPasswordForCheck");
         Optional<SiteUser> findUser = siteUserService.checkPasswordByEmail(changePasswordForm.getPassword(), user.getUsername(), bindingResult, "password");
 
         if (bindingResult.hasErrors()) {
@@ -83,7 +84,7 @@ public class LoginController {
     }
 
     @PreAuthorize("isAnonymous()")
-    @GetMapping("/findId")
+    @GetMapping("/findEmail")
     public String sendSMS(Model model) {
         model.addAttribute("phoneAuthForm", new PhoneAuthForm());
         return "FindEmail";
@@ -92,12 +93,20 @@ public class LoginController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/sms-certification/send")
     @ResponseBody
-    public ResponseEntity sendSMS(String phoneNumber, Model model) {
-        return smsService.sendSMS(phoneNumber);
+    public ResponseEntity sendSMSResponse(String phoneNumber) {
+        return smsService.sendSMSResponse(phoneNumber);
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/sms-certification/confirm")
+    @ResponseBody
+    public ResponseEntity confirmSMSResponse(@Valid @ModelAttribute(name = "phoneAuthForm") PhoneAuthForm phoneAuthForm,
+                                             BindingResult bindingResult) {
+        return smsService.verifySMSResponse(phoneAuthForm, bindingResult);
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/findEmail/confirm")
     public String confirmSMS(@Valid @ModelAttribute(name = "phoneAuthForm") PhoneAuthForm phoneAuthForm,
                              BindingResult bindingResult,
                              Model model) {
