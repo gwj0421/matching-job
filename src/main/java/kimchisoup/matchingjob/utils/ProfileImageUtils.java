@@ -31,7 +31,7 @@ public class ProfileImageUtils {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File profileImageFile = new File(String.format("%s%s.%s", profileImageDirectory, UUID.randomUUID(), StringUtils.getFilenameExtension(profileImage.getOriginalFilename())));
+        File profileImageFile = new File(String.format("%s\\%s.%s", profileImageDirectory, UUID.randomUUID(), StringUtils.getFilenameExtension(profileImage.getOriginalFilename())));
         try {
             profileImage.transferTo(profileImageFile);
             return profileImageFile.toURI().toURL();
