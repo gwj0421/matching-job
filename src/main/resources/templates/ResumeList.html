@@ -17,6 +17,14 @@
         .resume-block p {
             margin: 10px 0;
         }
+        .delete-btn {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +38,34 @@
         <p>전화번호: <span th:text="${resume.phoneNumber}"></span></p>
         <p>id: <span th:text="${resume.id}"></span></p>
         <!-- 필요한 경우 다른 이력서 정보들도 추가 -->
+
+        <!-- 삭제 버튼 -->
+        <button th:onclick="'deleteResume(' + ${resume.id} + ')'" class="delete-btn">삭제</button>
     </div>
 </div>
+
+<script th:inline="javascript">
+    function deleteResume(resumeId) {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            fetch('/resume/delete/' + resumeId, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('이력서 삭제에 실패했습니다.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message); // 서버로부터 받은 응답 메시지 표시
+                    location.reload(); // 페이지 새로고침
+                })
+                .catch(error => {
+                    console.error('이력서 삭제 오류:', error);
+                    alert('이력서 삭제에 실패했습니다.');
+                });
+        }
+    }
+</script>
 </body>
 </html>

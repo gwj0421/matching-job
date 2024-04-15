@@ -76,9 +76,9 @@ public class ResumeController {
     }
 //    @DeleteMapping("delete/id")
 //    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
-    @DeleteMapping("delete/id")
-    public String delete(long id){
-        resumeService.deleteResume(id);
-        return "redirect:/";
+    @DeleteMapping("/delete/{resumeId}")
+    public String delete(@PathVariable long resumeId){
+        resumeService.deleteResume(resumeId);
+        return "redirect:/resume/list";
     }
 }
