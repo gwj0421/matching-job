@@ -51,7 +51,15 @@ public class Company extends BaseTime {
         this.proposals.add(proposal);
     }
 
+    public void removeProposal(Proposal proposal) {
+        this.proposals.remove(proposal);
+    }
+
     public void addSuccessfulResume(SuccessfulResume successfulResume) {
         this.successfulResumes.add(successfulResume);
+    }
+
+    public void removeSuccessfulResume(SuccessfulResume successfulResume) {
+        this.successfulResumes.remove(successfulResume);
     }
 }

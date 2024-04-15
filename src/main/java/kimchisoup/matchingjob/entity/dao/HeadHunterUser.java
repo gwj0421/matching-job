@@ -1,9 +1,6 @@
 package kimchisoup.matchingjob.entity.dao;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import kimchisoup.matchingjob.security.entity.Authority;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,12 +21,15 @@ public class HeadHunterUser extends SiteUser {
     private List<Proposal> proposals = new ArrayList<>();
 
     @Builder
-    public HeadHunterUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, List<Proposal> proposals) {
-        super(name, email, password, phoneNumber, nickName, profileImageUrl, Authority.HEAD_HUNTER);
-        this.proposals = proposals;
+    public HeadHunterUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, Authority authority) {
+        super(name, email, password, phoneNumber, nickName, profileImageUrl, authority);
     }
 
     public void addProposal(Proposal proposal) {
         this.proposals.add(proposal);
+    }
+
+    public void removeProposal(Proposal proposal) {
+        this.proposals.remove(proposal);
     }
 }

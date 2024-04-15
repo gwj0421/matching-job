@@ -21,11 +21,12 @@ public class Proposal extends BaseTime {
     private Long id;
     @Enumerated(EnumType.STRING)
     private JobCategory jobCategory;
+    private int subJobCategoryIdx;
     @Enumerated(EnumType.STRING)
-    private CareerExperience requiredMinimumCareerExperience;
+    private CareerExperience careerExperience;
     private String pay;
     @Enumerated(EnumType.STRING)
-    private EducationField requiredMinimumEducationLevel;
+    private EducationField educationField;
     private String workType;
     @Enumerated(EnumType.STRING)
     private RegionType workRegion;
@@ -35,7 +36,7 @@ public class Proposal extends BaseTime {
     private String welfare;
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
-    private int submitterCnt;
+    private int submitterCnt = 0;
 
     @ManyToOne
     @JoinColumn(name = "head_hunter_id")
@@ -47,11 +48,12 @@ public class Proposal extends BaseTime {
     private List<JobSeekerUserProposal> users = new ArrayList<>();
 
     @Builder
-    public Proposal(JobCategory jobCategory, CareerExperience requiredMinimumCareerExperience, String pay, EducationField requiredMinimumEducationLevel, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
+    public Proposal(JobCategory jobCategory, int subJobCategoryIdx, CareerExperience careerExperience, String pay, EducationField educationField, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, HeadHunterUser headHunterUser, Company company, List<JobSeekerUserProposal> users) {
         this.jobCategory = jobCategory;
-        this.requiredMinimumCareerExperience = requiredMinimumCareerExperience;
+        this.subJobCategoryIdx = subJobCategoryIdx;
+        this.careerExperience = careerExperience;
         this.pay = pay;
-        this.requiredMinimumEducationLevel = requiredMinimumEducationLevel;
+        this.educationField = educationField;
         this.workType = workType;
         this.workRegion = workRegion;
         this.introduction = introduction;
@@ -59,8 +61,15 @@ public class Proposal extends BaseTime {
         this.preference = preference;
         this.welfare = welfare;
         this.offerStatus = offerStatus;
-        this.submitterCnt = submitterCnt;
         this.headHunterUser = headHunterUser;
         this.company = company;
+        this.users = users;
+    }
+
+    public void plusSubmitter() {
+        this.submitterCnt++;
+    }
+    public void changeIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }
