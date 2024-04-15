@@ -2,6 +2,7 @@ package kimchisoup.matchingjob.service;
 
 import kimchisoup.matchingjob.entity.dao.SiteUser;
 import kimchisoup.matchingjob.repository.SiteUserRepository;
+import kimchisoup.matchingjob.security.entity.SignUpForHeadHunterForm;
 import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
 import kimchisoup.matchingjob.utils.DtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,13 @@ public class SiteUserServiceImpl implements SiteUserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveUser(SignUpForJobSeekerForm signUpForJobSeekerForm) {
+    public void saveUserForJobSeeker(SignUpForJobSeekerForm signUpForJobSeekerForm) {
         userRepository.save(dtoMapper.toJobSeekerUser(signUpForJobSeekerForm));
+    }
+
+    @Override
+    public void saveUserForHeadHunter(SignUpForHeadHunterForm signUpForHeadHunterForm) {
+        userRepository.save(dtoMapper.toHeadHunterUser(signUpForHeadHunterForm));
     }
 
     @Override
@@ -50,7 +56,7 @@ public class SiteUserServiceImpl implements SiteUserService {
     @Override
     public void checkCertification(boolean certified, BindingResult bindingResult, String errorField) {
         if (!certified) {
-            bindingResult.rejectValue(errorField,"error.certified","인증 미실시");
+            bindingResult.rejectValue(errorField, "error.certified", "인증 미실시");
         }
     }
 

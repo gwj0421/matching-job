@@ -3,6 +3,10 @@ package kimchisoup.matchingjob.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kimchisoup.matchingjob.config.properties.CoolSMSProperty;
 import kimchisoup.matchingjob.repository.*;
+import kimchisoup.matchingjob.security.service.EmailService;
+import kimchisoup.matchingjob.security.service.EmailServiceImpl;
+import kimchisoup.matchingjob.security.service.SMSService;
+import kimchisoup.matchingjob.security.service.SMSServiceImpl;
 import kimchisoup.matchingjob.service.*;
 import kimchisoup.matchingjob.utils.DtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +14,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +29,7 @@ public class ServiceConfig {
     private final CoolSMSProperty coolSMSProperty;
     private final DefaultMessageService messageService;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender javaMailSender;
 
     @Bean
     ObjectMapper objectMapper() {
@@ -53,6 +59,11 @@ public class ServiceConfig {
     @Bean
     SMSService smsService() {
         return new SMSServiceImpl(coolSMSProperty, messageService, siteUserService(), redisService());
+    }
+
+    @Bean
+    EmailService emailService() {
+        return new EmailServiceImpl(javaMailSender,redisService());
     }
 
     @Bean

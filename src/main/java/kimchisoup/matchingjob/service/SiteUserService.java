@@ -1,13 +1,16 @@
 package kimchisoup.matchingjob.service;
 
 import kimchisoup.matchingjob.entity.dao.SiteUser;
+import kimchisoup.matchingjob.security.entity.SignUpForHeadHunterForm;
 import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
 import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
 
 public interface SiteUserService {
-    void saveUser(SignUpForJobSeekerForm signUpForJobSeekerForm);
+    void saveUserForJobSeeker(SignUpForJobSeekerForm signUpForJobSeekerForm);
+
+    void saveUserForHeadHunter(SignUpForHeadHunterForm signUpForHeadHunterForm);
 
     Optional<SiteUser> findUserByEmail(String email);
 

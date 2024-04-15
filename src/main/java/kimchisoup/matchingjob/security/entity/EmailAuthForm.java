@@ -8,19 +8,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PhoneAuthForm {
+public class EmailAuthForm {
     @NotBlank
-    @Size(min = 9,max = 11)
-    private String phoneNumber;
+    @Size(min = 3)
+    private String email;
     @NotBlank
     private String certificationCode;
 
-    public PhoneAuthForm() {
+    public EmailAuthForm() {
     }
 
     @JsonCreator
-    public PhoneAuthForm(String phoneNumber, String certificationCode) {
-        this.phoneNumber = phoneNumber;
+    public EmailAuthForm(String email, String certificationCode) {
+        this.email = email;
         this.certificationCode = certificationCode;
     }
 }

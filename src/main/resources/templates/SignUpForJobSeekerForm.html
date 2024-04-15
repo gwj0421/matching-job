@@ -29,7 +29,7 @@
     <div>
         <div th:if="${#fields.hasErrors('certified')}" th:errors="*{certified}"></div>
         <input type="hidden" th:field="*{certified}">
-        <input type="text" th:id="inputCode" placeholder="인증 코드"><br>
+        <input type="text" th:id="certificationCode" placeholder="인증 코드"><br>
         <button type="button" th:id="certificationButton" onclick="certification()">인증</button>
     </div>
 
@@ -58,7 +58,7 @@
             success: function (response) {
                 // 성공적으로 서버로부터 응답을 받은 경우 수행할 작업
                 console.log("Success:", response);
-                showOrHideCertificationInputCode(false);
+                showOrHideCertificationCode(false);
             },
             error: function (request, status, error) {
                 // 서버로 요청을 보내는 중에 오류가 발생한 경우 수행할 작업
@@ -72,7 +72,7 @@
     function certification() {
         const phoneAuthForm = {
             phoneNumber: $("#phoneNumber").val(),
-            inputCode: $("#inputCode").val()
+            certificationCode: $("#certificationCode").val()
         };
         $.ajax({
             type: "POST",
@@ -80,7 +80,7 @@
             data: phoneAuthForm, // 전송할 데이터
             success: function (response) {
                 $("#certified").val("true");
-                showOrHideCertificationInputCode(true);
+                showOrHideCertificationCode(true);
             },
             error: function (request, status, error) {
                 if (request.status === 400) {
@@ -91,18 +91,18 @@
         });
     }
 
-    function showOrHideCertificationInputCode(isCertified) {
+    function showOrHideCertificationCode(isCertified) {
         if (isCertified) {
-            $("#inputCode").hide();
+            $("#certificationCode").hide();
             $("#certificationButton").hide();
         } else {
-            $("#inputCode").show();
+            $("#certificationCode").show();
             $("#certificationButton").show();
         }
     }
 
     if ($("#certified")) {
-        $("#inputCode").hide();
+        $("#certificationCode").hide();
         $("#certificationButton").hide();
     }
 </script>

@@ -1,4 +1,4 @@
-package kimchisoup.matchingjob.service;
+package kimchisoup.matchingjob.security.service;
 
 import kimchisoup.matchingjob.security.entity.PhoneAuthForm;
 import net.nurigo.sdk.message.model.Message;
@@ -10,9 +10,7 @@ public interface SMSService {
 
     ResponseEntity sendSMSResponse(String phoneNumber);
 
-    String verifySMS(PhoneAuthForm phoneAuthForm, BindingResult bindingResult, String errorField);
+    ResponseEntity verifySMS(PhoneAuthForm phoneAuthForm, BindingResult bindingResult);
 
-    ResponseEntity verifySMSResponse(PhoneAuthForm phoneAuthForm,BindingResult bindingResult);
-
-    boolean isValidCertificationNumber(PhoneAuthForm phoneAuthForm);
+    boolean isValidCertificationCode(PhoneAuthForm phoneAuthForm);
 }

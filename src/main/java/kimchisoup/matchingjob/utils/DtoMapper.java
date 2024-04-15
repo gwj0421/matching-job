@@ -1,8 +1,10 @@
 package kimchisoup.matchingjob.utils;
 
+import kimchisoup.matchingjob.entity.dao.HeadHunterUser;
 import kimchisoup.matchingjob.entity.dao.JobSeekerUser;
 import kimchisoup.matchingjob.entity.dao.Resume;
 import kimchisoup.matchingjob.entity.dto.ResumeForm;
+import kimchisoup.matchingjob.security.entity.SignUpForHeadHunterForm;
 import kimchisoup.matchingjob.security.entity.SignUpForJobSeekerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,17 @@ public class DtoMapper {
                 .profileImageUrl(profileImageUtils.saveImageAndReturnUrl(form.getProfileImage()))
                 .githubToken(form.getGithubToken())
                 .residence(form.getResidence())
+                .build();
+    }
+
+    public HeadHunterUser toHeadHunterUser(SignUpForHeadHunterForm form) {
+        return HeadHunterUser.builder()
+                .name(form.getName())
+                .email(form.getEmail())
+                .password(passwordEncoder.encode(form.getPassword1()))
+                .phoneNumber(form.getPhoneNumber())
+                .nickName(form.getNickName())
+                .profileImageUrl(profileImageUtils.saveImageAndReturnUrl(form.getProfileImage()))
                 .build();
     }
 
