@@ -1,10 +1,13 @@
 package kimchisoup.matchingjob.entity.dto;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import kimchisoup.matchingjob.entity.common.CareerExperience;
 import kimchisoup.matchingjob.entity.common.EducationField;
 import lombok.Builder;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +17,9 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class ResumeForm {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @NotNull
     private MultipartFile idPhoto;
     @NotEmpty

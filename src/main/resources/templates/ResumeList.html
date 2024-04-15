@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 목록</title>
+    <style>
+        .resume-block {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .resume-block h2 {
+            margin-top: 0;
+        }
+        .resume-block p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<h1>이력서 목록</h1>
+
+<!-- 이력서 목록을 표시하는 반복문 -->
+<div th:each="resume : ${ResumeList}">
+    <div class="resume-block">
+        <h2 th:text="${resume.name}">이름</h2>
+        <p>Email: <span th:text="${resume.email}"></span></p>
+        <p>전화번호: <span th:text="${resume.phoneNumber}"></span></p>
+        <p>id: <span th:text="${resume.id}"></span></p>
+        <!-- 필요한 경우 다른 이력서 정보들도 추가 -->
+    </div>
+</div>
+</body>
+</html>
