@@ -22,13 +22,13 @@ public class JobSeekerUser extends SiteUser {
     @Enumerated(EnumType.STRING)
     private RegionType residence;
 
-    @OneToMany(mappedBy = "jobSeekerUser")
+    @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
     private List<JobSeekerUserRegion> jobSeekerUserRegions = new ArrayList<>();
-    @OneToMany(mappedBy = "jobSeekerUser")
+    @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
     private List<JobSeekerUserJobField> jobSeekerUserJobFields = new ArrayList<>();
-    @OneToMany(mappedBy = "jobSeekerUser")
+    @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
-    @OneToMany(mappedBy = "jobSeekerUser")
+    @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
     private List<Resume> resumes = new ArrayList<>();
 
     @Builder

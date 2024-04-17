@@ -5,11 +5,7 @@ import kimchisoup.matchingjob.entity.dao.Resume;
 import kimchisoup.matchingjob.entity.dto.ResumeForm;
 import kimchisoup.matchingjob.security.entity.CustomUserDetails;
 import kimchisoup.matchingjob.service.ResumeService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,9 +21,8 @@ import java.util.List;
 public class ResumeController {
     private final ResumeService resumeService;
 
-//    @GetMapping
-//    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
     public String resumeForm(Model model) {
         model.addAttribute("resume", new ResumeForm());
         return "ResumeForm";
@@ -40,45 +35,44 @@ public class ResumeController {
         return "ResumeList";
     }
 
-//    @PostMapping
-//    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
-//    public String create(@AuthenticationPrincipal CustomUserDetails user,
-//                         @Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
-//                         BindingResult bindingResult,
-//                         Model model) {
-//        resumeService.createResume(user, resumeForm);
-//        if (bindingResult.hasErrors()) {
-//            return "ResumeForm";
-//        }
-//        return "redirect:/";
-//    @PostMapping
-//    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
-//    public String create(@AuthenticationPrincipal CustomUserDetails user,
-//                                         @Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
-//                                         BindingResult bindingResult,
-//                                         Model model) {
-//        resumeService.createResume(user, resumeForm);
-//        if (bindingResult.hasErrors()) {
-//            return "ResumeForm";
-//        }
-//        return "ResumeList";
-//    }
-
     @PostMapping
-    public String create(@Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+    public String create(@AuthenticationPrincipal CustomUserDetails user,
+                                         @Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
                                          BindingResult bindingResult,
                                          Model model) {
-        resumeService.createResume(resumeForm);
+        resumeService.createResume(user, resumeForm);
         if (bindingResult.hasErrors()) {
             return "ResumeForm";
         }
         return "redirect:/resume/list";
     }
-//    @DeleteMapping("delete/id")
-//    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+
+    @GetMapping("/read/{resumeId}")
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+    public String read(@PathVariable long resumeId, Model model) {
+        Resume resume = resumeService.readResume(resumeId).orElseThrow();
+        model.addAttribute("resume", resume);
+        return "ReadingResume";
+    }
+
     @DeleteMapping("/delete/{resumeId}")
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
     public String delete(@PathVariable long resumeId){
         resumeService.deleteResume(resumeId);
+        return "redirect:/resume/list";
+    }
+
+    @PostMapping("/update")
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+    public String update(@AuthenticationPrincipal CustomUserDetails user,
+                         @Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
+                         BindingResult bindingResult,
+                         Model model) {
+        resumeService.updateResume(resumeForm);
+        if (bindingResult.hasErrors()) {
+            return "ResumeForm";
+        }
         return "redirect:/resume/list";
     }
 }

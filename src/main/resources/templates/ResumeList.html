@@ -41,6 +41,7 @@
 
         <!-- 삭제 버튼 -->
         <button th:onclick="'deleteResume(' + ${resume.id} + ')'" class="delete-btn">삭제</button>
+        <button th:onclick="'readResume(' + ${resume.id} + ')'" class="delete-btn">보기</button>
     </div>
 </div>
 
@@ -66,6 +67,27 @@
                 });
         }
     }
+</script>
+<script th:inline="javascript">
+    function readResume(resumeId) {
+        fetch('/resume/read/' + resumeId, {
+            method: 'GET'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('이력서를 읽어오는 데 실패했습니다.');
+                }
+                return response.text(); // 페이지 HTML 내용을 텍스트로 반환
+            })
+            .then(html => {
+                document.getElementById('resumeDetails').innerHTML = html; // 페이지 내용 업데이트
+            })
+            .catch(error => {
+                console.error('이력서 읽기 오류:', error);
+                alert('이력서 읽기에 실패했습니다.');
+            });
+    }
+
 </script>
 </body>
 </html>

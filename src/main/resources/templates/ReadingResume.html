@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이력서 확인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 추가된 CSS */
+        .profile-img {
+            max-width: 200px; /* 최대 이미지 너비 지정 */
+            height: auto; /* 비율 유지 */
+        }
+    </style>
+</head>
+<body>
+<div id="resumeDetails" class="container mt-4">
+    <h2 class="text-center mb-4">이력서 확인</h2>
+    <form id="resumeForm" action="#" th:method="post" th:object="${resume}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">프로필 사진</label><br>
+            <img th:src="@{'/path/to/profile/image/' + ${resume.idPhoto}}" class="profile-img mb-2" alt="프로필 사진">
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            <label th:for="*{name}" class="form-label">이름</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" th:value="${resume.name}" readonly>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+            <label th:for="*{birthdate}" class="form-label">생년월일</label>
+            <input type="date" class="form-control" th:field="*{birthdate}" th:value="${resume.birthdate}" readonly>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <label th:for="*{email}" class="form-label">이메일</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" th:value="${resume.email}" readonly>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+            <label th:for="*{phoneNumber}" class="form-label">전화번호</label>
+            <input type="tel" class="form-control" th:field="*{phoneNumber}" th:value="${resume.phoneNumber}" readonly>
+        </div>
+        <div class="mb-3">
+            <div th:if="${#fields.hasErrors('selfIntroduction')}" th:errors="*{selfIntroduction}"></div>
+            <label th:for="*{selfIntroduction}" class="form-label">자기소개</label>
+            <input type="text" class="form-control" id="address" th:field="*{selfIntroduction}" th:value="${resume.selfIntroduction}" readonly>
+        </div>
+        <!-- 경력 섹션 -->
+        <div class="mb-4">
+            <h4 class="mb-3">경력</h4>
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">최종 경력</label>
+                    <input type="text" class="form-control" th:value="${resume.careerExperience}" readonly>
+                    <label class="form-label">최종 학력</label>
+                    <input type="text" class="form-control" th:value="${resume.educationField}" readonly>
+                    <label class="form-label">포트폴리오</label>
+                    <input type="text" class="form-control" th:value="${resume.portfolio}" readonly>
+                    <label class="form-label">프로젝트</label>
+                    <input type="text" class="form-control" th:value="${resume.projects}" readonly>
+                </div>
+            </div>
+        </div>
+        <!-- 기타 섹션 -->
+        <div class="mb-4">
+            <h4 class="mb-3">기타</h4>
+            <div class="mb-3">
+                <label class="form-label">Skills</label>
+                <textarea class="form-control" readonly th:text="${resume.skills}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">자격증</label>
+                <textarea class="form-control" readonly th:text="${resume.certificate}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">수상 내역</label>
+                <textarea class="form-control" readonly th:text="${resume.awards}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Link</label>
+                <textarea class="form-control" readonly th:text="${resume.link}"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

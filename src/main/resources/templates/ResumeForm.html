@@ -74,11 +74,11 @@
                 <label th:for="*{skills}" class="form-label">skills</label>
                 <textarea class="form-control" rows="3" th:field="*{skills}"></textarea>
             </div>
-            <div class="mb-3">
-                <div th:if="${#fields.hasErrors('certificate')}" th:errors="*{certificate}"></div>
-                <label th:for="*{certificate}" class="form-label">자격증</label>
-                <textarea class="form-control" rows="3" th:field="*{certificate}"></textarea>
-            </div>
+<!--            <div class="mb-3">-->
+<!--                <div th:if="${#fields.hasErrors('certificate')}" th:errors="*{certificate}"></div>-->
+<!--                <label th:for="*{certificate}" class="form-label">자격증</label>-->
+<!--                <textarea class="form-control" rows="3" th:field="*{certificate}"></textarea>-->
+<!--            </div>-->
             <div class="mb-3">
                 <div th:if="${#fields.hasErrors('awards')}" th:errors="*{awards}"></div>
                 <label th:for="*{awards}" class="form-label">수상 내역</label>

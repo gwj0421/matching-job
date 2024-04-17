@@ -1,6 +1,7 @@
 package kimchisoup.matchingjob.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
 import kimchisoup.matchingjob.repository.*;
 import kimchisoup.matchingjob.service.ResumeService;
 import kimchisoup.matchingjob.service.ResumeServiceImpl;
@@ -19,6 +20,7 @@ public class ServiceConfig {
     private final SuccessfulResumeRepository successfulResumeRepository;
     private final ResumeRepository resumeRepository;
     private final DtoMapper dtoMapper;
+    private final EntityManager em;
 
     @Bean
     ObjectMapper objectMapper() {
@@ -32,7 +34,7 @@ public class ServiceConfig {
 
     @Bean
     ResumeService resumeService() {
-        return new ResumeServiceImpl(userRepository,resumeRepository,dtoMapper);
+        return new ResumeServiceImpl(userRepository,resumeRepository,dtoMapper,em);
     }
 
     @Bean

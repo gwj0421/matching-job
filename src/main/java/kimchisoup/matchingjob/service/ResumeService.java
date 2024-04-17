@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ResumeService {
-//    void createResume(CustomUserDetails userDetails, ResumeForm resumeForm);
-    void createResume(ResumeForm resumeForm);
+    void createResume(CustomUserDetails userDetails, ResumeForm resumeForm);
+//    void createResume(ResumeForm resumeForm);
     void deleteResume(long id);
-    Optional<Resume> findById(long id);
     List<Resume> getData();
+    void updateResume(ResumeForm resumeForm);
+    Optional<Resume> readResume(long id);
 }

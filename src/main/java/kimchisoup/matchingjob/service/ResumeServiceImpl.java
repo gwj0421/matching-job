@@ -1,5 +1,6 @@
 package kimchisoup.matchingjob.service;
 
+import jakarta.persistence.EntityManager;
 import kimchisoup.matchingjob.entity.dao.JobSeekerUser;
 import kimchisoup.matchingjob.entity.dao.Resume;
 import kimchisoup.matchingjob.entity.dto.ResumeForm;
@@ -20,18 +21,13 @@ public class ResumeServiceImpl implements ResumeService {
     private final SiteUserRepository userRepository;
     private final ResumeRepository resumeRepository;
     private final DtoMapper dtoMapper;
+    private final EntityManager em;
 
-//    @Override
-//    public void createResume(CustomUserDetails userDetails, ResumeForm resumeForm) {
-//        JobSeekerUser findUser = (JobSeekerUser) userRepository.findByEmail(userDetails.getUsername()).get();
-//        Resume savedResume = resumeRepository.save(dtoMapper.toResume(resumeForm,findUser));
-//        findUser.addResume(savedResume);
-//    }
     @Override
-    public void createResume(ResumeForm resumeForm) {
-        JobSeekerUser findUser = null;
+    public void createResume(CustomUserDetails userDetails, ResumeForm resumeForm) {
+        JobSeekerUser findUser = (JobSeekerUser) userRepository.findByEmail(userDetails.getUsername()).get();
         Resume savedResume = resumeRepository.save(dtoMapper.toResume(resumeForm,findUser));
-//        findUser.addResume(savedResume);
+        findUser.addResume(savedResume);
     }
 
     @Override
@@ -50,7 +46,12 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public Optional<Resume> findById(long id){
+    public void updateResume(ResumeForm resumeForm) {
+        em.merge(resumeForm);
+    }
+
+    @Override
+    public Optional<Resume> readResume(long id) {
         return resumeRepository.findById(id);
     }
 }
