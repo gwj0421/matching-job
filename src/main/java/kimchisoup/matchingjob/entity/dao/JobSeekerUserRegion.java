@@ -2,6 +2,7 @@ package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ public class JobSeekerUserRegion {
     @JoinColumn(name = "region_id")
     private Region region;
 
+    @Builder
     public JobSeekerUserRegion(JobSeekerUser jobSeekerUser, Region region) {
         this.jobSeekerUser = jobSeekerUser;
         this.region = region;

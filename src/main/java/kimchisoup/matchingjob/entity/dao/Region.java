@@ -3,6 +3,7 @@ package kimchisoup.matchingjob.entity.dao;
 import jakarta.persistence.*;
 import kimchisoup.matchingjob.entity.common.RegionType;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,11 +23,20 @@ public class Region {
     @OneToMany(mappedBy = "region")
     private List<JobSeekerUserRegion> jobSeekerUserRegions = new ArrayList<>();
 
+    @Builder
     public Region(RegionType regionType) {
+        this.regionType = regionType;
+    }
+
+    public void changeRegionType(RegionType regionType) {
         this.regionType = regionType;
     }
 
     public void addJobSeekerUserRegion(JobSeekerUserRegion jobSeekerUserRegion) {
         this.jobSeekerUserRegions.add(jobSeekerUserRegion);
+    }
+
+    public void removeJobSeekerUserRegion(JobSeekerUserRegion jobSeekerUserRegion) {
+        this.jobSeekerUserRegions.remove(jobSeekerUserRegion);
     }
 }

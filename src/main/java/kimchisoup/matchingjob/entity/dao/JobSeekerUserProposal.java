@@ -2,6 +2,7 @@ package kimchisoup.matchingjob.entity.dao;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ public class JobSeekerUserProposal {
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
 
+    @Builder
     public JobSeekerUserProposal(JobSeekerUser jobSeekerUser, Proposal proposal) {
         this.jobSeekerUser = jobSeekerUser;
         this.proposal = proposal;

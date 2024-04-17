@@ -7,10 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "JOB_SEEKER_USER_INTEREST_FIELD")
+@Table(name = "JOB_SEEKER_USER_COMPANY")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class JobSeekerUserJobField {
+public class JobSeekerUserCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +20,12 @@ public class JobSeekerUserJobField {
     private JobSeekerUser jobSeekerUser;
     @ManyToOne
     @JoinColumn(name = "job_field_id")
-    private JobField jobField;
+    private Company company;
 
     @Builder
-    public JobSeekerUserJobField(JobSeekerUser jobSeekerUser, JobField jobField) {
+    public JobSeekerUserCompany(JobSeekerUser jobSeekerUser, Company company) {
         this.jobSeekerUser = jobSeekerUser;
-        this.jobField = jobField;
+        this.company = company;
     }
 }
+

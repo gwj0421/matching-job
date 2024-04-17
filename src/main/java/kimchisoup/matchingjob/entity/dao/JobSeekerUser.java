@@ -30,6 +30,8 @@ public class JobSeekerUser extends SiteUser {
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<Resume> resumes = new ArrayList<>();
+    @OneToMany(mappedBy = "jobSeekerUser")
+    private List<JobSeekerUserCompany> jobSeekerUserCompanies = new ArrayList<>();
 
     @Builder
     public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, Authority authority, String githubToken, RegionType residence) {
@@ -38,19 +40,39 @@ public class JobSeekerUser extends SiteUser {
         this.residence = residence;
     }
 
-    public void addRegion(JobSeekerUserRegion region) {
-        this.jobSeekerUserRegions.add(region);
+    public void addJobSeekerUserRegion(JobSeekerUserRegion jobSeekerUserRegion) {
+        this.jobSeekerUserRegions.add(jobSeekerUserRegion);
     }
 
-    public void addJobField(JobSeekerUserJobField jobField) {
-        this.jobSeekerUserJobFields.add(jobField);
+    public void removeJobSeekerUserRegion(JobSeekerUserRegion jobSeekerUserRegion) {
+        this.jobSeekerUserRegions.remove(jobSeekerUserRegion);
     }
 
-    public void addProposal(JobSeekerUserProposal proposal) {
-        this.jobSeekerUserProposals.add(proposal);
+    public void addJobSeekerUserJobFields(JobSeekerUserJobField jobSeekerUserJobField) {
+        this.jobSeekerUserJobFields.add(jobSeekerUserJobField);
+    }
+
+    public void removeJobSeekerUserJobFields(JobSeekerUserJobField jobSeekerUserJobField) {
+        this.jobSeekerUserJobFields.remove(jobSeekerUserJobField);
+    }
+
+    public void addJobSeekerUserProposal(JobSeekerUserProposal jobSeekerUserProposal) {
+        this.jobSeekerUserProposals.add(jobSeekerUserProposal);
+    }
+
+    public void removeJobSeekerUserProposal(JobSeekerUserProposal jobSeekerUserProposal) {
+        this.jobSeekerUserProposals.remove(jobSeekerUserProposal);
     }
 
     public void addResume(Resume resume) {
         this.resumes.add(resume);
+    }
+
+    public void addSubscribedCompany(JobSeekerUserCompany jobSeekerUserCompany) {
+        this.jobSeekerUserCompanies.add(jobSeekerUserCompany);
+    }
+
+    public void removeSubscribedCompany(JobSeekerUserCompany jobSeekerUserCompany) {
+        this.jobSeekerUserCompanies.remove(jobSeekerUserCompany);
     }
 }

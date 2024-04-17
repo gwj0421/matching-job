@@ -23,12 +23,16 @@ public class JobField {
     @OneToMany(mappedBy = "jobField")
     private List<JobSeekerUserJobField> jobSeekerUserJobFields = new ArrayList<>();
 
-    public JobField(JobCategory jobCategory, Enum subJobCategory) {
+    public JobField(JobCategory jobCategory, int subJobCategoryIdx) {
         this.jobCategory = jobCategory;
-        this.subJobCategory = subJobCategory;
+        this.subJobCategory = jobCategory.getSubCategory()[subJobCategoryIdx];
     }
 
-    public void addJobSeekerUserInterestField(JobSeekerUserJobField jobSeekerUserJobField) {
-        jobSeekerUserJobFields.add(jobSeekerUserJobField);
+    public void addJobSeekerJobField(JobSeekerUserJobField jobSeekerUserJobField) {
+        this.jobSeekerUserJobFields.add(jobSeekerUserJobField);
+    }
+
+    public void removeJobSeekerJobField(JobSeekerUserJobField jobSeekerUserJobField) {
+        this.jobSeekerUserJobFields.remove(jobSeekerUserJobField);
     }
 }

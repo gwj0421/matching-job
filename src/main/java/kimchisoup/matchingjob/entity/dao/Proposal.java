@@ -45,10 +45,10 @@ public class Proposal extends BaseTime {
     @JoinColumn(name = "company_id")
     private Company company;
     @OneToMany(mappedBy = "proposal")
-    private List<JobSeekerUserProposal> users = new ArrayList<>();
+    private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
 
     @Builder
-    public Proposal(JobCategory jobCategory, int subJobCategoryIdx, CareerExperience careerExperience, String pay, EducationField educationField, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, HeadHunterUser headHunterUser, Company company, List<JobSeekerUserProposal> users) {
+    public Proposal(JobCategory jobCategory, int subJobCategoryIdx, CareerExperience careerExperience, String pay, EducationField educationField, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
         this.jobCategory = jobCategory;
         this.subJobCategoryIdx = subJobCategoryIdx;
         this.careerExperience = careerExperience;
@@ -61,9 +61,17 @@ public class Proposal extends BaseTime {
         this.preference = preference;
         this.welfare = welfare;
         this.offerStatus = offerStatus;
+        this.submitterCnt = submitterCnt;
         this.headHunterUser = headHunterUser;
         this.company = company;
-        this.users = users;
+    }
+
+    public void addJobSeekerUserProposal(JobSeekerUserProposal jobSeekerUserProposal) {
+        this.jobSeekerUserProposals.add(jobSeekerUserProposal);
+    }
+
+    public void removeJobSeekerUserProposal(JobSeekerUserProposal jobSeekerUserProposal) {
+        this.jobSeekerUserProposals.remove(jobSeekerUserProposal);
     }
 
     public void plusSubmitter() {
