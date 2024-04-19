@@ -29,11 +29,12 @@ public class ResumeController {
     }
 
     @GetMapping("/list")
-    public String resumeList(Model model){
-        List<Resume> resumes = resumeService.getData();
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+    public String resumeList(Model model, @AuthenticationPrincipal CustomUserDetails user){
+        List<Resume> resumes = resumeService.getData(user.getId());
         model.addAttribute("ResumeList", resumes);
         return "ResumeList";
-    }
+}
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
@@ -63,15 +64,24 @@ public class ResumeController {
         return "redirect:/resume/list";
     }
 
-    @PostMapping("/update")
+    @GetMapping("/update/{resumeId}")
+    @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
+    public String resumeUpdateForm(Model model) {
+        model.addAttribute("resumeUpdating", new ResumeForm());
+        return "ResumeUpdateForm";
+    }
+
+    @PostMapping("/update/{resumeId}")
     @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
     public String update(@AuthenticationPrincipal CustomUserDetails user,
-                         @Valid @ModelAttribute(name = "resume") ResumeForm resumeForm,
-                         BindingResult bindingResult,
-                         Model model) {
-        resumeService.updateResume(resumeForm);
-        if (bindingResult.hasErrors()) {
-            return "ResumeForm";
+                         @Valid @ModelAttribute(name = "resumeUpdating") ResumeForm resumeForm,
+                         @PathVariable long resumeId,
+                         BindingResult bindingResult) {
+            System.out.println("update 실행됨");
+            resumeService.updateResume(resumeForm, user, resumeId);
+
+            if (bindingResult.hasErrors()) {
+            return "ResumeUpdateForm";
         }
         return "redirect:/resume/list";
     }

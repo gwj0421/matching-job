@@ -9,9 +9,8 @@ import java.util.Optional;
 
 public interface ResumeService {
     void createResume(CustomUserDetails userDetails, ResumeForm resumeForm);
-//    void createResume(ResumeForm resumeForm);
     void deleteResume(long id);
-    List<Resume> getData();
-    void updateResume(ResumeForm resumeForm);
+    List<Resume> getData(long email);
+    void updateResume(ResumeForm resumeForm, CustomUserDetails userDetails, long resumeId);
     Optional<Resume> readResume(long id);
 }
