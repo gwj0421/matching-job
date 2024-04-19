@@ -1,24 +1,18 @@
 package kimchisoup.matchingjob.repository;
 
-import kimchisoup.matchingjob.config.ServiceConfig;
 import kimchisoup.matchingjob.entity.common.RegionType;
 import kimchisoup.matchingjob.entity.dao.JobSeekerUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(ServiceConfig.class)
 class JobSeekerUserRepositoryTest {
     @Autowired
     private JobSeekerUserRepository jobSeekerUserRepository;
@@ -27,21 +21,22 @@ class JobSeekerUserRepositoryTest {
     @Autowired
     private JobFieldRepository jobFieldRepository;
     @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
     private JobSeekerUserRegionRepository jobSeekerUserRegionRepository;
     @Autowired
     private JobSeekerUserInterestFieldRepository jobSeekerUserInterestFieldRepository;
     @Autowired
     private JobSeekerUserProposalRepository jobSeekerUserProposalRepository;
     @Autowired
-    private ProposalRepository proposalRepository;
+    private JobSeekerUserCompanyRepository jobSeekerUserCompanyRepository;
 
     @Test
-    void crud() throws MalformedURLException {
+    void crud(){
         // given
         JobSeekerUser user = JobSeekerUser.builder().email("testEmail@gmail.com")
                 .name("testName")
                 .githubToken("testGithubToken")
-                .profileImageUrl(new URL("http://localhost:8080"))
                 .password("testPassword")
                 .phoneNumber("testPhoneNumber")
                 .residence(RegionType.DAEJEON)
@@ -63,20 +58,5 @@ class JobSeekerUserRepositoryTest {
         assertThat(checkDelete).isNotPresent();
     }
 
-    @Test
-    void testMiddleTable() throws MalformedURLException {
-        // given
-        JobSeekerUser user = JobSeekerUser.builder().email("testEmail@gmail.com")
-                .name("testName")
-                .githubToken("testGithubToken")
-                .profileImageUrl(new URL("http://localhost:8080"))
-                .password("testPassword")
-                .phoneNumber("testPhoneNumber")
-                .residence(RegionType.DAEJEON)
-                .nickName("testNickName")
-                .build();
-        List<RegionType> region = List.of(RegionType.DAEJEON, RegionType.SEOUL);
 
-        // when
-    }
 }
