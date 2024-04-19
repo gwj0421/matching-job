@@ -8,6 +8,7 @@ import kimchisoup.matchingjob.service.ResumeServiceImpl;
 import kimchisoup.matchingjob.service.SuccessfulResumeService;
 import kimchisoup.matchingjob.service.SuccessfulResumeServiceImpl;
 import kimchisoup.matchingjob.utils.DtoMapper;
+import kimchisoup.matchingjob.utils.ProfileImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ public class ServiceConfig {
     private final ResumeRepository resumeRepository;
     private final DtoMapper dtoMapper;
     private final EntityManager em;
+    private final ProfileImageUtils profileImageUtils;
 
     @Bean
     ObjectMapper objectMapper() {
@@ -34,7 +36,7 @@ public class ServiceConfig {
 
     @Bean
     ResumeService resumeService() {
-        return new ResumeServiceImpl(userRepository,resumeRepository,dtoMapper,em);
+        return new ResumeServiceImpl(userRepository,resumeRepository,dtoMapper,em,profileImageUtils);
     }
 
     @Bean
