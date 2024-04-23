@@ -66,8 +66,9 @@ public class ResumeController {
 
     @GetMapping("/update/{resumeId}")
     @PreAuthorize("hasAnyRole('ROLE_JOB_SEEKER','ROLE_ADMIN')")
-    public String resumeUpdateForm(Model model) {
-        model.addAttribute("resumeUpdating", new ResumeForm());
+    public String resumeUpdateForm(@PathVariable long resumeId, Model model) {
+        Resume resume = resumeService.readResume(resumeId).orElseThrow();
+        model.addAttribute("resume", resume);
         return "ResumeUpdateForm";
     }
 

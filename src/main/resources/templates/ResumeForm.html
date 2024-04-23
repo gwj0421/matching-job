@@ -92,36 +92,6 @@
         </div>
 
         <button id="submit-button" type="submit" class="btn btn-primary btn-block">제출</button>
-
-<!--        <script>-->
-<!--            $(document).ready(function() {-->
-<!--                $("#submit-button").click(function() {-->
-<!--                    $.ajax({-->
-<!--                        type: "POST",-->
-<!--                        url: "/api/action",-->
-<!--                        data: {/* 요청 데이터 */},-->
-<!--                        success: function(response, textStatus, xhr) {-->
-<!--                            // 서버에서 반환된 상태 코드 확인-->
-<!--                            var statusCode = xhr.status;-->
-<!--                            var id = response;-->
-<!--                            if (statusCode === 201) {-->
-<!--                                // 성공적으로 처리된 경우, 리다이렉션 수행-->
-<!--                                window.location.href = "/resume/list?id=" + id;-->
-<!--                            } else {-->
-<!--                                // 다른 상태 코드의 경우, 에러 처리 등을 수행-->
-<!--                                alert("작업을 처리하는데 실패했습니다.");-->
-<!--                                window.locaion.href = "/resume"-->
-<!--                            }-->
-<!--                        },-->
-<!--                        error: function(xhr, textStatus, errorThrown) {-->
-<!--                            // 요청 실패 시 처리-->
-<!--                            alert("요청을 보내는데 실패했습니다.");-->
-<!--                        }-->
-<!--                    });-->
-<!--                });-->
-<!--            });-->
-<!--        </script>-->
-
     </form>
 </div>
 </body>
