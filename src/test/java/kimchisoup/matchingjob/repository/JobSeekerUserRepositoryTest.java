@@ -16,20 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JobSeekerUserRepositoryTest {
     @Autowired
     private JobSeekerUserRepository jobSeekerUserRepository;
-    @Autowired
-    private RegionRepository regionRepository;
-    @Autowired
-    private JobFieldRepository jobFieldRepository;
-    @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private JobSeekerUserRegionRepository jobSeekerUserRegionRepository;
-    @Autowired
-    private JobSeekerUserInterestFieldRepository jobSeekerUserInterestFieldRepository;
-    @Autowired
-    private JobSeekerUserProposalRepository jobSeekerUserProposalRepository;
-    @Autowired
-    private JobSeekerUserCompanyRepository jobSeekerUserCompanyRepository;
 
     @Test
     void crud(){

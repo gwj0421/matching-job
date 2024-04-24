@@ -30,7 +30,7 @@ public class MiddleTableTest {
     @Autowired
     private JobSeekerUserRegionRepository jobSeekerUserRegionRepository;
     @Autowired
-    private JobSeekerUserJobFieldRepository jobSeekerUserJobFieldRepository;
+    private ResumeJobFieldRepository resumeJobFieldRepository;
     @Autowired
     private JobSeekerUserProposalRepository jobSeekerUserProposalRepository;
     @Autowired
@@ -81,40 +81,43 @@ public class MiddleTableTest {
 
         @Test
         @DisplayName("JobSeekerUserJobField")
-        void jobSeekerUserJobField() {
+        void ResumeJobField() {
             // given
             JobSeekerUser user = JobSeekerUser.builder()
                     .name("testName").build();
+            Resume resume = Resume.builder()
+                    .jobSeekerUser(user)
+                    .build();
             JobField jobField = new JobField(JobCategory.Development_Data, 0);
             jobSeekerUserRepository.save(user);
             jobFieldRepository.save(jobField);
 
             // when
-            JobSeekerUserJobField jobSeekerUserJobField = JobSeekerUserJobField.builder()
-                    .jobSeekerUser(user)
+            ResumeJobField resumeJobField = ResumeJobField.builder()
+                    .resume(resume)
                     .jobField(jobField)
                     .build();
-            jobSeekerUserJobFieldRepository.save(jobSeekerUserJobField);
-            user.addJobSeekerUserJobFields(jobSeekerUserJobField);
-            jobField.addJobSeekerJobField(jobSeekerUserJobField);
+            resumeJobFieldRepository.save(resumeJobField);
+            resume.addResumeJobFields(resumeJobField);
+            jobField.addResumeJobField(resumeJobField);
 
             // then
-            Optional<JobSeekerUserJobField> findJobSeekerUserJobField = jobSeekerUserJobFieldRepository.findById(jobSeekerUserJobField.getId());
+            Optional<ResumeJobField> findJobSeekerUserJobField = resumeJobFieldRepository.findById(resumeJobField.getId());
             assertCreateReadMiddleTable(jobSeekerUserRepository.findById(user.getId()),
                     jobFieldRepository.findById(jobField.getId()),
                     findJobSeekerUserJobField
             );
 
             // when
-            jobSeekerUserJobFieldRepository.deleteById(jobSeekerUserJobField.getId());
-            user.removeJobSeekerUserJobFields(jobSeekerUserJobField);
-            jobField.removeJobSeekerJobField(jobSeekerUserJobField);
+            resumeJobFieldRepository.deleteById(resumeJobField.getId());
+            resume.removeResumeJobFields(resumeJobField);
+            jobField.removeResumeJobField(resumeJobField);
 
             // then
             assertAfterDeleteMiddleTable(jobSeekerUserRepository.findById(user.getId()),
                     jobFieldRepository.findById(jobField.getId()),
-                    jobSeekerUserJobFieldRepository.findById(jobSeekerUserJobField.getId()),
-                    JobSeekerUserJobField.class);
+                    resumeJobFieldRepository.findById(resumeJobField.getId()),
+                    ResumeJobField.class);
         }
 
         @Test
@@ -209,9 +212,9 @@ public class MiddleTableTest {
         if (middleTable.get() instanceof JobSeekerUserRegion) {
             assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserRegions()).hasSize(1);
             assertThat(((Region) rightTable.get()).getJobSeekerUserRegions()).hasSize(1);
-        } else if (middleTable.get() instanceof JobSeekerUserJobField) {
-            assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserJobFields()).hasSize(1);
-            assertThat(((JobField) rightTable.get()).getJobSeekerUserJobFields()).hasSize(1);
+        } else if (middleTable.get() instanceof ResumeJobField) {
+            assertThat(((Resume) leftTable.get()).getResumeJobFields()).hasSize(1);
+            assertThat(((JobField) rightTable.get()).getResumeJobFields()).hasSize(1);
         } else if (middleTable.get() instanceof JobSeekerUserProposal) {
             assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserProposals()).hasSize(1);
             assertThat(((Proposal) rightTable.get()).getJobSeekerUserProposals()).hasSize(1);
@@ -228,9 +231,9 @@ public class MiddleTableTest {
         if (middleTableClass == JobSeekerUserRegion.class) {
             assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserRegions()).isEmpty();
             assertThat(((Region) rightTable.get()).getJobSeekerUserRegions()).isEmpty();
-        } else if (middleTableClass == JobSeekerUserJobField.class) {
-            assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserJobFields()).isEmpty();
-            assertThat(((JobField) rightTable.get()).getJobSeekerUserJobFields()).isEmpty();
+        } else if (middleTableClass == ResumeJobField.class) {
+            assertThat(((Resume) leftTable.get()).getResumeJobFields()).isEmpty();
+            assertThat(((JobField) rightTable.get()).getResumeJobFields()).isEmpty();
         } else if (middleTableClass == JobSeekerUserProposal.class) {
             assertThat(((JobSeekerUser) leftTable.get()).getJobSeekerUserProposals()).isEmpty();
             assertThat(((Proposal) rightTable.get()).getJobSeekerUserProposals()).isEmpty();
