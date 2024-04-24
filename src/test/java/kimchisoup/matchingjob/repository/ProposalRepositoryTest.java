@@ -37,7 +37,7 @@ class ProposalRepositoryTest {
                 .name("삼성 전자")
                 .build();
         Proposal proposal = Proposal.builder()
-                .introduction("원본 소개")
+                .selfInterviewQuestion("원본 소개")
                 .headHunterUser(headHunterUser)
                 .company(company)
                 .build();
@@ -55,7 +55,7 @@ class ProposalRepositoryTest {
 
         // then
         assertThat(findProposal).isPresent();
-        assertThat(findProposal.get().getIntroduction()).isEqualTo("바뀐 소개");
+        assertThat(findProposal.get().getSelfInterviewQuestion()).isEqualTo("바뀐 소개");
         assertThat(findHeadHunter).isPresent();
         assertThat(findHeadHunter.get().getProposals()).hasSize(1);
         assertThat(findCompany).isPresent();
@@ -88,7 +88,7 @@ class ProposalRepositoryTest {
                 .name("삼성 전자")
                 .build();
         Proposal proposal = Proposal.builder()
-                .introduction("원본 소개")
+                .selfInterviewQuestion("원본 소개")
                 .headHunterUser(headHunterUser)
                 .company(company)
                 .build();
@@ -108,7 +108,7 @@ class ProposalRepositoryTest {
 
         // then
         assertThat(findProposal).isPresent();
-        assertThat(findProposal.get().getIntroduction()).isEqualTo("바뀐 소개");
+        assertThat(findProposal.get().getSelfInterviewQuestion()).isEqualTo("바뀐 소개");
         assertThat(findHeadHunter).isPresent();
         assertThat(findHeadHunter.get().getProposals()).hasSize(1);
         assertThat(findCompany).isPresent();

@@ -21,10 +21,12 @@ public class JobSeekerUserProposal {
     @ManyToOne
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
+    private String selfInterviewAnswer;
 
     @Builder
-    public JobSeekerUserProposal(JobSeekerUser jobSeekerUser, Proposal proposal) {
+    public JobSeekerUserProposal(JobSeekerUser jobSeekerUser, Proposal proposal, String selfInterviewAnswer) {
         this.jobSeekerUser = jobSeekerUser;
         this.proposal = proposal;
+        this.selfInterviewAnswer = selfInterviewAnswer;
     }
 }

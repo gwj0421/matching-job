@@ -30,7 +30,7 @@ public class Proposal extends BaseTime {
     private String workType;
     @Enumerated(EnumType.STRING)
     private RegionType workRegion;
-    private String introduction;
+    private String selfInterviewQuestion;
     private String requirement;
     private String preference;
     private String welfare;
@@ -47,8 +47,9 @@ public class Proposal extends BaseTime {
     @OneToMany(mappedBy = "proposal")
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
 
+
     @Builder
-    public Proposal(JobCategory jobCategory, int subJobCategoryIdx, CareerExperience careerExperience, String pay, EducationField educationField, String workType, RegionType workRegion, String introduction, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
+    public Proposal(JobCategory jobCategory, int subJobCategoryIdx, CareerExperience careerExperience, String pay, EducationField educationField, String workType, RegionType workRegion, String selfInterviewQuestion, String requirement, String preference, String welfare, OfferStatus offerStatus, int submitterCnt, HeadHunterUser headHunterUser, Company company) {
         this.jobCategory = jobCategory;
         this.subJobCategoryIdx = subJobCategoryIdx;
         this.careerExperience = careerExperience;
@@ -56,7 +57,7 @@ public class Proposal extends BaseTime {
         this.educationField = educationField;
         this.workType = workType;
         this.workRegion = workRegion;
-        this.introduction = introduction;
+        this.selfInterviewQuestion = selfInterviewQuestion;
         this.requirement = requirement;
         this.preference = preference;
         this.welfare = welfare;
@@ -78,6 +79,6 @@ public class Proposal extends BaseTime {
         this.submitterCnt++;
     }
     public void changeIntroduction(String introduction) {
-        this.introduction = introduction;
+        this.selfInterviewQuestion = introduction;
     }
 }
