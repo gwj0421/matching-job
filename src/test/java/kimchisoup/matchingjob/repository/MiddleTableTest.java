@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MiddleTableTest {
     @Autowired
     private JobSeekerUserRepository jobSeekerUserRepository;
@@ -124,6 +126,7 @@ public class MiddleTableTest {
             Proposal proposal = Proposal.builder()
                     .jobCategory(JobCategory.Development_Data)
                     .subJobCategoryIdx(0)
+                    .selfInterviewQuestion("당신의 꿈은 무엇입니까")
                     .build();
             jobSeekerUserRepository.save(user);
             proposalRepository.save(proposal);
@@ -132,6 +135,7 @@ public class MiddleTableTest {
             JobSeekerUserProposal jobSeekerUserProposal = JobSeekerUserProposal.builder()
                     .jobSeekerUser(user)
                     .proposal(proposal)
+                    .selfInterviewAnswer("내 꿈은 우주비행사")
                     .build();
             jobSeekerUserProposalRepository.save(jobSeekerUserProposal);
             user.addJobSeekerUserProposal(jobSeekerUserProposal);
