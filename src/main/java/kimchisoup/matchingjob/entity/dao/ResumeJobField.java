@@ -10,21 +10,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "JOB_SEEKER_USER_INTEREST_FIELD")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class JobSeekerUserJobField {
+public class ResumeJobField {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "job_seeker_user_id")
-    private JobSeekerUser jobSeekerUser;
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
     @ManyToOne
     @JoinColumn(name = "job_field_id")
     private JobField jobField;
 
     @Builder
-    public JobSeekerUserJobField(JobSeekerUser jobSeekerUser, JobField jobField) {
-        this.jobSeekerUser = jobSeekerUser;
+    public ResumeJobField(Resume resume, JobField jobField) {
+        this.resume = resume;
         this.jobField = jobField;
     }
 }

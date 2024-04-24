@@ -25,8 +25,6 @@ public class JobSeekerUser extends SiteUser {
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<JobSeekerUserRegion> jobSeekerUserRegions = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
-    private List<JobSeekerUserJobField> jobSeekerUserJobFields = new ArrayList<>();
-    @OneToMany(mappedBy = "jobSeekerUser")
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser")
     private List<Resume> resumes = new ArrayList<>();
@@ -46,14 +44,6 @@ public class JobSeekerUser extends SiteUser {
 
     public void removeJobSeekerUserRegion(JobSeekerUserRegion jobSeekerUserRegion) {
         this.jobSeekerUserRegions.remove(jobSeekerUserRegion);
-    }
-
-    public void addJobSeekerUserJobFields(JobSeekerUserJobField jobSeekerUserJobField) {
-        this.jobSeekerUserJobFields.add(jobSeekerUserJobField);
-    }
-
-    public void removeJobSeekerUserJobFields(JobSeekerUserJobField jobSeekerUserJobField) {
-        this.jobSeekerUserJobFields.remove(jobSeekerUserJobField);
     }
 
     public void addJobSeekerUserProposal(JobSeekerUserProposal jobSeekerUserProposal) {

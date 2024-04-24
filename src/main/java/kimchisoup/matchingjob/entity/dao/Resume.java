@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "RESUME")
@@ -32,6 +34,7 @@ public class Resume extends BaseTime {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private EducationField educationField;
+    private String license;
     private String skills;
     private String awards;
     private String link;
@@ -39,9 +42,11 @@ public class Resume extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "job_seeker_id")
     private JobSeekerUser jobSeekerUser;
+    @OneToMany(mappedBy = "resume")
+    private List<ResumeJobField> resumeJobFields = new ArrayList<>();
 
     @Builder
-    public Resume(URL idPhoto, LocalDate birthdate, String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, String email, String phoneNumber, EducationField educationField, String skills, String awards, String link, JobSeekerUser jobSeekerUser) {
+    public Resume(URL idPhoto, LocalDate birthdate, String selfIntroduction, CareerExperience careerExperience, String projects, String portfolio, String name, String email, String phoneNumber, EducationField educationField, String license, String skills, String awards, String link, JobSeekerUser jobSeekerUser) {
         this.idPhoto = idPhoto;
         this.birthdate = birthdate;
         this.selfIntroduction = selfIntroduction;
@@ -52,9 +57,18 @@ public class Resume extends BaseTime {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.educationField = educationField;
+        this.license = license;
         this.skills = skills;
         this.awards = awards;
         this.link = link;
         this.jobSeekerUser = jobSeekerUser;
+    }
+
+    public void addResumeJobFields(ResumeJobField resumeJobField) {
+        this.resumeJobFields.add(resumeJobField);
+    }
+
+    public void removeResumeJobFields(ResumeJobField resumeJobField) {
+        this.resumeJobFields.remove(resumeJobField);
     }
 }
