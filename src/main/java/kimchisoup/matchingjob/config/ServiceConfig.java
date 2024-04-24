@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 public class ServiceConfig {
     private final SiteUserRepository userRepository;
     private final SuccessfulResumeRepository successfulResumeRepository;
+    private final JobFieldRepository jobFieldRepository;
     private final ResumeRepository resumeRepository;
     private final DtoMapper dtoMapper;
     private final StringRedisTemplate stringRedisTemplate;
@@ -48,7 +49,7 @@ public class ServiceConfig {
 
     @Bean
     ResumeService resumeService() {
-        return new ResumeServiceImpl(resumeRepository, siteUserService(), dtoMapper);
+        return new ResumeServiceImpl(resumeRepository, jobFieldRepository, siteUserService(), dtoMapper);
     }
 
     @Bean
@@ -63,7 +64,7 @@ public class ServiceConfig {
 
     @Bean
     EmailService emailService() {
-        return new EmailServiceImpl(javaMailSender,redisService());
+        return new EmailServiceImpl(javaMailSender, redisService());
     }
 
     @Bean

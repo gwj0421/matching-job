@@ -40,7 +40,7 @@ public class DtoMapper {
                 .build();
     }
 
-    public Resume toResume(ResumeForm resumeForm,JobSeekerUser jobSeekerUser) {
+    public Resume toResume(ResumeForm resumeForm, JobSeekerUser jobSeekerUser) {
         return Resume.builder()
                 .idPhoto(profileImageUtils.saveImageAndReturnUrl(resumeForm.getIdPhoto()))
                 .birthdate(resumeForm.getBirthdate())
