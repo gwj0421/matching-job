@@ -32,6 +32,8 @@ public class Company extends BaseTime {
     private List<Proposal> proposals = new ArrayList<>();
     @OneToMany(mappedBy = "company")
     private List<SuccessfulResume> successfulResumes = new ArrayList<>();
+    @OneToMany(mappedBy = "company")
+    private List<CompanyReview> companyReviews = new ArrayList<>();
 
     @Builder
     public Company(String name, int peopleCnt, BigDecimal sales, String address, Industry industry, String introduction) {
@@ -53,5 +55,8 @@ public class Company extends BaseTime {
 
     public void addSuccessfulResume(SuccessfulResume successfulResume) {
         this.successfulResumes.add(successfulResume);
+    }
+    public void addCompanyReview(CompanyReview companyReview){
+        companyReviews.add(companyReview);
     }
 }

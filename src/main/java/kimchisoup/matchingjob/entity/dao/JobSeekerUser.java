@@ -30,6 +30,8 @@ public class JobSeekerUser extends SiteUser {
     private List<JobSeekerUserProposal> jobSeekerUserProposals = new ArrayList<>();
     @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
     private List<Resume> resumes = new ArrayList<>();
+    @OneToMany(mappedBy = "jobSeekerUser", cascade = CascadeType.REMOVE)
+    private List<CompanyReview> companyReviews = new ArrayList<>();
 
     @Builder
     public JobSeekerUser(String name, String email, String password, String phoneNumber, String nickName, URL profileImageUrl, Authority authority, String githubToken, RegionType residence) {
@@ -52,5 +54,9 @@ public class JobSeekerUser extends SiteUser {
 
     public void addResume(Resume resume) {
         this.resumes.add(resume);
+    }
+
+    public void addCompanyReivew(CompanyReview companyReview){
+        companyReviews.add(companyReview);
     }
 }
